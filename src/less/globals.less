@@ -1,0 +1,137 @@
+@import (multiple, reference, optional) '../../theme.config';
+
+/* Enables customization of addons */
+.loadAddonOverrides() {
+  @import (optional)
+    '@{siteFolder}/../addons/@{addon}/@{addontype}s/@{addonelement}.overrides';
+}
+
+/* Helper to load variables */
+.loadAddonVariables() {
+  @import (optional) '@{addonelement}.variables';
+  @import (optional)
+    '@{siteFolder}/../addons/@{addon}/@{addontype}s/@{addonelement}.variables';
+}
+
+@import './variables.less';
+
+.makeProperty(@property, @value, @super) when (@super) {
+  @procesedValue: if(
+    isnumber(@value) and @value > 0 and not(ispercentage(@value)),
+    e(%('%sem', @value)),
+    @value
+  );
+  @{property}: @procesedValue !important;
+}
+
+.makeProperty(@property, @value, @super) when (not(@super)) {
+  @procesedValue: if(
+    isnumber(@value) and @value > 0 and not(ispercentage(@value)),
+    e(%('%sem', @value)),
+    @value
+  );
+  @{property}: @procesedValue;
+}
+
+.makeClassByArray(@array, @property, @class, @super) when (@super) {
+  each(@array, {
+    .@{class}-@{value}-super {
+      .makeProperty(@property, @value, @super);
+    }
+  });
+}
+
+.makeClassByArray(@array, @property, @class, @super) when (not(@super)) {
+  each(@array, {
+    .@{class}-@{value} {
+      .makeProperty(@property, @value, @super);
+    }
+  });
+}
+
+.makeClassByObject(@object, @values, @property, @class, @super) {
+  each(@object, {
+    @objectKey: if(@key = default, '', e(%('-%s', @key)));
+    .makeClassByArray(@range, e(%('%s%s', @property, @objectKey)), e(%('%s%s', @class, @value)), @super );
+  });
+}
+
+.contentWidthMedia(@width, @gutter, @offset) {
+  .ui.container {
+    width: @width !important;
+    margin-right: @gutter !important;
+    margin-left: @gutter !important;
+  }
+}
+
+.makeClassByObject(@position, @range, margin, m, false);
+.makeClassByObject(@position, @range, margin, m, true);
+.makeClassByObject(@position, @range, padding, p, false);
+.makeClassByObject(@position, @range, padding, p, true);
+
+.makeClassByArray(@display, display, display, false);
+.makeClassByArray(@display, display, display, true);
+.makeClassByArray(@display-position, position, position, false);
+.makeClassByArray(@display-position, position, position, true);
+.makeClassByArray(@align-items, align-items, align-items, false);
+.makeClassByArray(@align-items, align-items, align-items, true);
+.makeClassByArray(@flex-flow, flex-flow, flex-flow, false);
+.makeClassByArray(@flex-flow, flex-flow, flex-flow, true);
+.makeClassByArray(@justify-content, justify-content, justify-content, false);
+.makeClassByArray(@justify-content, justify-content, justify-content, true);
+.makeClassByArray(@text-align, text-align, text-align, false);
+.makeClassByArray(@text-align, text-align, text-align, true);
+.makeClassByArray(@text-decoration, text-decoration, text-decoration, false);
+.makeClassByArray(@text-decoration, text-decoration, text-decoration, true);
+
+/*----------------------
+    Padding & margin per Device
+-----------------------*/
+
+/* Small Sizing Combinations */
+@media only screen and (min-width: @smallscreenBreakpoint) and (max-width: @mobileBreakpoint) {
+  .makeClassByObject(@position, @range, margin, small-m, true);
+  .makeClassByObject(@position, @range, margin, small-m, false);
+  .makeClassByObject(@position, @range, padding, small-p, true);
+  .makeClassByObject(@position, @range, padding, small-p, false);
+}
+
+/* Mobile Sizing Combinations */
+@media only screen and (min-width: @mobileBreakpoint) and (max-width: @largestMobileScreen) {
+  .makeClassByObject(@position, @range, margin, mobile-m, true);
+  .makeClassByObject(@position, @range, margin, mobile-m, false);
+  .makeClassByObject(@position, @range, padding, mobile-p, true);
+  .makeClassByObject(@position, @range, padding, mobile-p, false);
+}
+
+/* Tablet Sizing Combinations */
+@media only screen and (min-width: @tabletBreakpoint) and (max-width: @largestTabletScreen) {
+  .makeClassByObject(@position, @range, margin, tablet-m, true);
+  .makeClassByObject(@position, @range, margin, tablet-m, false);
+  .makeClassByObject(@position, @range, padding, tablet-p, true);
+  .makeClassByObject(@position, @range, padding, tablet-p, false);
+}
+
+/* Computer/Desktop Sizing Combinations */
+@media only screen and (min-width: @computerBreakpoint) {
+  .makeClassByObject(@position, @range, margin, computer-m, true);
+  .makeClassByObject(@position, @range, margin, computer-m, false);
+  .makeClassByObject(@position, @range, padding, computer-p, true);
+  .makeClassByObject(@position, @range, padding, computer-p, false);
+}
+
+/* Large Monitor Sizing Combinations */
+@media only screen and (min-width: @largeMonitorBreakpoint) and (max-width: @largestLargeMonitor) {
+  .makeClassByObject(@position, @range, margin, largescreen-m, true);
+  .makeClassByObject(@position, @range, margin, largescreen-m, false);
+  .makeClassByObject(@position, @range, padding, largescreen-p, true);
+  .makeClassByObject(@position, @range, padding, largescreen-p, false);
+}
+
+/* Widescreen Sizing Combinations */
+@media only screen and (min-width: @widescreenMonitorBreakpoint) {
+  .makeClassByObject(@position, @range, margin, ws-m, true);
+  .makeClassByObject(@position, @range, margin, ws-m, false);
+  .makeClassByObject(@position, @range, padding, ws-p, true);
+  .makeClassByObject(@position, @range, padding, ws-p, false);
+}

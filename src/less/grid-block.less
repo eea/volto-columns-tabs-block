@@ -1,0 +1,335 @@
+@import './globals.less';
+@import './grid-block-container.less';
+
+.columns-tabs-container {
+  .ui.attached.menu {
+    margin-bottom: 1rem;
+  }
+
+  .ui.segment.transition {
+    padding: 0;
+  }
+
+  .ui.grid.grid-block {
+    margin-right: -1rem;
+    margin-left: -1rem;
+
+    .grid-column {
+      .block .block-add-button {
+        display: none;
+      }
+
+      .block {
+        padding: 0;
+        margin: 0;
+
+        .block:not(.inner)::before {
+          z-index: unset;
+          overflow: visible;
+          pointer-events: none;
+        }
+      }
+
+      .block-editor {
+        .ui.block.inner {
+          margin-bottom: 2em;
+        }
+
+        &.last-child {
+          .ui.block.inner {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+  &.edit {
+    .ui.grid.grid-block {
+      // margin-top: 1em;
+      // margin-bottom: 1em;
+    }
+
+    .grid-column {
+      padding-top: 1em;
+      padding-bottom: 1em;
+    }
+  }
+
+  .grid-column,
+  .grid-column .grid-column-block {
+    &.aligned {
+      &.left {
+        text-align: left;
+
+        .public-DraftEditor-content {
+          text-align: left;
+        }
+      }
+
+      &.center {
+        text-align: center;
+
+        .public-DraftEditor-content {
+          text-align: center;
+        }
+      }
+
+      &.right {
+        text-align: right;
+
+        .public-DraftEditor-content {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  .block-toolbar {
+    position: absolute;
+    z-index: 10;
+    top: -32px;
+    left: 0;
+    padding: 3px;
+    border: none;
+    margin: 0;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+
+    .wrapper-column-block {
+      > .ui.basic.button {
+        &:hover {
+          background-color: transparent !important;
+        }
+
+        &:focus {
+          background-color: transparent !important;
+        }
+      }
+    }
+
+    > .ui.basic.button {
+      &:hover {
+        background-color: transparent !important;
+      }
+
+      &:focus {
+        background-color: transparent !important;
+      }
+
+      svg {
+        color: #134448;
+      }
+    }
+
+    .drag.handle.wrapper-column-block {
+      position: initial;
+      left: initial;
+      min-height: 1em;
+      margin-left: initial !important;
+      font-size: 1rem;
+      line-height: 1em;
+      vertical-align: baseline;
+    }
+  }
+
+  [data-rbd-draggable-context-id] {
+    margin-bottom: 0 !important;
+  }
+}
+
+.block .columns-tabs-container.view {
+  p {
+    margin: inherit;
+  }
+
+  h1:last-child,
+  h2:last-child,
+  h3:last-child,
+  h4:last-child,
+  h5:last-child {
+    margin: inherit;
+  }
+}
+
+.columns-tabs-sidebar {
+  &.no-inline-form-header {
+    > .ui.segment,
+    > .ui.segment:not(.tab) {
+      padding: 0;
+      border-top: 0;
+      border-bottom: 0;
+      box-shadow: none;
+    }
+
+    > .ui.segments.form {
+      border-top: 0;
+      border-bottom: 0;
+      box-shadow: none;
+
+      > header {
+        display: none;
+      }
+
+      > div {
+        > .ui.segment {
+          padding-top: 0;
+        }
+      }
+    }
+
+    .buttons-wrapper {
+      padding: 1em;
+
+      .ui.icon.button {
+        border: none;
+        background-color: transparent !important;
+        box-shadow: none !important;
+
+        :hover {
+          background-color: transparent !important;
+          box-shadow: none !important;
+        }
+
+        :focus {
+          background-color: transparent !important;
+          box-shadow: none !important;
+          outline: none;
+        }
+      }
+    }
+  }
+
+  > .ui.segment {
+    box-shadow: none;
+  }
+
+  > .ui.segment,
+  > .ui.segments.form {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  #blockform-fieldset-default {
+    .inline.field {
+      padding-bottom: 1em;
+    }
+  }
+}
+
+/* Smallscreen */
+@media only screen and (min-width: @smallscreenBreakpoint) and (max-width: @mobileBreakpoint) {
+  .ui.grid.grid-block > .row > [class*='one wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='one wide small'].column,
+  .ui.grid.grid-block > [class*='one wide small'].column,
+  .ui.column.grid.grid-block > [class*='one wide small'].column {
+    width: @oneWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='two wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='two wide small'].column,
+  .ui.grid.grid-block > [class*='two wide small'].column,
+  .ui.column.grid.grid-block > [class*='two wide small'].column {
+    width: @twoWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='three wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='three wide small'].column,
+  .ui.grid.grid-block > [class*='three wide small'].column,
+  .ui.column.grid.grid-block > [class*='three wide small'].column {
+    width: @threeWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='four wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='four wide small'].column,
+  .ui.grid.grid-block > [class*='four wide small'].column,
+  .ui.column.grid.grid-block > [class*='four wide small'].column {
+    width: @fourWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='five wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='five wide small'].column,
+  .ui.grid.grid-block > [class*='five wide small'].column,
+  .ui.column.grid.grid-block > [class*='five wide small'].column {
+    width: @fiveWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='six wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='six wide small'].column,
+  .ui.grid.grid-block > [class*='six wide small'].column,
+  .ui.column.grid.grid-block > [class*='six wide small'].column {
+    width: @sixWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='seven wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='seven wide small'].column,
+  .ui.grid.grid-block > [class*='seven wide small'].column,
+  .ui.column.grid.grid-block > [class*='seven wide small'].column {
+    width: @sevenWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='eight wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='eight wide small'].column,
+  .ui.grid.grid-block > [class*='eight wide small'].column,
+  .ui.column.grid.grid-block > [class*='eight wide small'].column {
+    width: @eightWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='nine wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='nine wide small'].column,
+  .ui.grid.grid-block > [class*='nine wide small'].column,
+  .ui.column.grid.grid-block > [class*='nine wide small'].column {
+    width: @nineWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='ten wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='ten wide small'].column,
+  .ui.grid.grid-block > [class*='ten wide small'].column,
+  .ui.column.grid.grid-block > [class*='ten wide small'].column {
+    width: @tenWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='eleven wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='eleven wide small'].column,
+  .ui.grid.grid-block > [class*='eleven wide small'].column,
+  .ui.column.grid.grid-block > [class*='eleven wide small'].column {
+    width: @elevenWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='twelve wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='twelve wide small'].column,
+  .ui.grid.grid-block > [class*='twelve wide small'].column,
+  .ui.column.grid.grid-block > [class*='twelve wide small'].column {
+    width: @twelveWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='thirteen wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='thirteen wide small'].column,
+  .ui.grid.grid-block > [class*='thirteen wide small'].column,
+  .ui.column.grid.grid-block > [class*='thirteen wide small'].column {
+    width: @thirteenWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='fourteen wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='fourteen wide small'].column,
+  .ui.grid.grid-block > [class*='fourteen wide small'].column,
+  .ui.column.grid.grid-block > [class*='fourteen wide small'].column {
+    width: @fourteenWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='fifteen wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='fifteen wide small'].column,
+  .ui.grid.grid-block > [class*='fifteen wide small'].column,
+  .ui.column.grid.grid-block > [class*='fifteen wide small'].column {
+    width: @fifteenWide !important;
+  }
+
+  .ui.grid.grid-block > .row > [class*='sixteen wide small'].column,
+  .ui.grid.grid-block > .column.row > [class*='sixteen wide small'].column,
+  .ui.grid.grid-block > [class*='sixteen wide small'].column,
+  .ui.column.grid.grid-block > [class*='sixteen wide small'].column {
+    width: @sixteenWide !important;
+  }
+}
