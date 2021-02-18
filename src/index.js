@@ -4,7 +4,13 @@ import {
   ColumnsTabsBlockView,
   DefaultTabEdit,
   DefaultTabView,
+  TabPaneEdit,
+  TabPaneView,
 } from './ColumnsTabsBlock';
+import {
+  CarouselTabView,
+  carouselSchema,
+} from '@eeacms/volto-columns-tabs-block/Themes';
 import { variants } from './grid';
 import { COLUMNS_TABS_BLOCK } from './constants';
 
@@ -12,6 +18,8 @@ import ColumnLayoutWidget from './Widgets/ColumnLayoutWidget';
 import ColorPickerWidget from './Widgets/ColorPickerWidget';
 import JsonTextWidget from './Widgets/JsonTextWidget';
 import CssWidget from './Widgets/CssWidget';
+
+export { TabPaneEdit, TabPaneView };
 
 export default (config) => {
   config.blocks.blocksConfig[COLUMNS_TABS_BLOCK] = {
@@ -33,6 +41,11 @@ export default (config) => {
       default: {
         tabEdit: DefaultTabEdit,
         tabView: DefaultTabView,
+      },
+      carousel: {
+        tabEdit: DefaultTabEdit,
+        tabView: CarouselTabView,
+        schema: carouselSchema,
       },
     },
   };

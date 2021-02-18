@@ -31,8 +31,18 @@ const TabPaneView = (props) => {
         textColor: activeTabData.grid_text_color?.active
           ? activeTabData.grid_text_color.color
           : null,
+        // backgroundImage: `url()`,
       })}
     >
+      {activeTabData.grid_background_image ? (
+        <img
+          className="bg"
+          src={`${activeTabData.grid_background_image}/@@images/image`}
+          alt="test"
+        />
+      ) : (
+        ''
+      )}
       <Grid.Row
         className={cx(
           'grid-row',

@@ -26,6 +26,19 @@ const DefaultTabView = (props) => {
   const prevActiveTabIndex = tabs.indexOf(prevActiveTabState);
 
   useEffect(() => {
+    // const auto = setInterval(() => {
+    //   if (activeTabIndex < tabs.length - 1) {
+    //     setActiveTab(tabs[activeTabIndex + 1]);
+    //   } else {
+    //     setActiveTab(tabs[0]);
+    //   }
+    // }, 5000);
+    // return () => {
+    //   clearInterval(auto);
+    // };
+  }, []);
+
+  useEffect(() => {
     setPrevActiveTabState(prevActiveTab);
     /* eslint-disable-next-line */
   }, [activeTab]);
@@ -45,24 +58,7 @@ const DefaultTabView = (props) => {
   }));
 
   return (
-    <>
-      {!data.menu_hidden ? (
-        <Menu attached>
-          {panes.map((pane) => (
-            <Menu.Item
-              name={pane.tabName}
-              active={pane.tabId === activeTab}
-              onClick={() => {
-                setActiveTab(pane.tabId);
-              }}
-            >
-              {pane.tabName}
-            </Menu.Item>
-          ))}
-        </Menu>
-      ) : (
-        ''
-      )}
+    <div style={{ position: 'relative' }} className="full-width">
       {tabs.length
         ? tabs?.map((tab, index) => (
             <Transition
@@ -110,7 +106,19 @@ const DefaultTabView = (props) => {
         id="transition-placeholder"
         style={{ height: state.placeholderHeight }}
       />
-    </>
+      <div className="carousel-menu">
+        <Menu attached>
+          {panes.map((pane) => (
+            <Menu.Item
+              active={pane.tabId === activeTab}
+              onClick={() => {
+                setActiveTab(pane.tabId);
+              }}
+            ></Menu.Item>
+          ))}
+        </Menu>
+      </div>
+    </div>
   );
 };
 

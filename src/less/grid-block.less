@@ -1,18 +1,119 @@
 @import './globals.less';
 @import './grid-block-container.less';
 
-.columns-tabs-container {
-  .ui.attached.menu {
-    margin-bottom: 1rem;
+.mb-1 {
+  margin-bottom: 1rem !important;
+}
+
+.rounded {
+  img {
+    border-radius: 100%;
   }
+}
+
+.tab-container {
+  margin-top: 1rem;
+
+  &.transition.out.exiting,
+  &.transition.in {
+    height: 0;
+  }
+}
+
+.transition-placeholder {
+  width: 100%;
+}
+
+.carousel-menu {
+  position: absolute;
+  bottom: 14px;
+  width: 100%;
+
+  .ui.menu {
+    border: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    background-color: transparent;
+    align-items: center;
+    justify-content: space-evenly;
+
+    &::after {
+      display: none;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 1px;
+      background-color: #fff;
+    }
+
+
+    .active.item, .item {
+      position: relative;
+      background-color: #fff;
+      border: none;
+      padding: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 100% !important;
+      &::before, &::after {
+        display: none;
+      }
+      &:hover {
+        background-color: #fff;
+      }
+    }
+
+    .active.item {
+      &::before {
+        position: absolute;
+        display: block;
+        content: '';
+        width: 18px;
+        height: 18px;
+        top: -5px;
+        left: -5px;
+        border: 1px solid #fff;
+        border-radius: 100%;
+      }
+    }
+  }
+}
+
+.columns-tabs-container {
 
   .ui.segment.transition {
     padding: 0;
   }
 
   .ui.grid.grid-block {
-    margin-right: -1rem;
-    margin-left: -1rem;
+    margin-right: 0;
+    margin-left: 0;
+    position: relative;
+    overflow: hidden;
+
+    img.bg {
+      /* Set rules to fill background */
+      min-height: 100%;
+      min-width: 1024px;
+      
+      /* Set up proportionate scaling */
+      width: 100%;
+      height: auto;
+      
+      /* Set up positioning */
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0;
+    }
+
+    .grid-row {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
 
     .grid-column {
       .block .block-add-button {

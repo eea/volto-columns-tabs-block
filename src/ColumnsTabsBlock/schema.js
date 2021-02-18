@@ -35,6 +35,7 @@ export const TabSchema = () => ({
       title: 'Advanced Grid style',
       fields: [
         'grid_class_name',
+        'grid_background_image',
         // 'grid_margin',
         // 'grid_padding',
         // 'grid_background_color',
@@ -80,6 +81,10 @@ export const TabSchema = () => ({
       items: {
         choices: [],
       },
+    },
+    grid_background_image: {
+      title: 'Background image',
+      widget: 'object_by_path',
     },
     grid_margin: {
       title: 'Margin',

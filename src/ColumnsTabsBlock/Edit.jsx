@@ -243,6 +243,9 @@ class Edit extends React.Component {
       blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.tabEdit ||
       DefaultTabEdit;
 
+    const themeSchema =
+      blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.schema;
+
     return (
       <div
         role="presentation"
@@ -335,6 +338,28 @@ class Edit extends React.Component {
                 }}
                 formData={data}
               />
+              {themeSchema ? (
+                <>
+                  <Segment>
+                    <header className="header pulled">
+                      <h2>{themeSchema.title}</h2>
+                    </header>
+                  </Segment>
+                  <InlineForm
+                    schema={themeSchema}
+                    title={themeSchema.title}
+                    onChangeField={(id, value) => {
+                      onChangeBlock(block, {
+                        ...data,
+                        [id]: value,
+                      });
+                    }}
+                    formData={data}
+                  />
+                </>
+              ) : (
+                ''
+              )}
               <Segment>
                 <header className="header pulled">
                   <h2>

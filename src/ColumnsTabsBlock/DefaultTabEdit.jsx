@@ -1,9 +1,23 @@
-import React from 'react';
-import { Tab, Menu, Transition } from 'semantic-ui-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Menu, Transition } from 'semantic-ui-react';
 import { emptyTab } from '@eeacms/volto-columns-tabs-block/helpers';
 import TabPaneEdit from './TabPaneEdit';
+import cx from 'classnames';
+
+const usePrevious = (value) => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
 
 const DefaultTabEdit = (props) => {
+  const [state, setState] = useState({
+    placeholderHeight: 0,
+    exitingTab: null,
+  });
+  const [prevActiveTabState, setPrevActiveTabState] = useState(null);
   const {
     data = {},
     activeTab = null,
@@ -14,15 +28,14 @@ const DefaultTabEdit = (props) => {
   const tabsData = data?.data;
   const tabs = tabsData?.blocks_layout?.items || [];
 
-  const panes = tabs?.map((tab, index) => ({
-    tabId: tab,
-    tabName: tabsData?.blocks?.[tab]?.title || `Tab ${index + 1}`,
-    render: () => (
-      <Tab.Pane>
-        <TabPaneEdit {...props} tabId={tab} />
-      </Tab.Pane>
-    ),
-  }));
+  const prevActiveTab = usePrevious(activeTab);
+  const activeTabIndex = tabs.indexOf(activeTab);
+  const prevActiveTabIndex = tabs.indexOf(prevActiveTabState);
+
+  useEffect(() => {
+    setPrevActiveTabState(prevActiveTab);
+    /* eslint-disable-next-line */
+  }, [activeTab]);
 
   const addNewTab = () => {
     const newData = {
@@ -65,6 +78,20 @@ const DefaultTabEdit = (props) => {
     });
   };
 
+  const getDirection = (index) => {
+    if (prevActiveTabIndex < activeTabIndex) {
+      if (index === activeTabIndex) return 'left';
+      return 'right';
+    }
+    if (index === activeTabIndex) return 'right';
+    return 'left';
+  };
+
+  const panes = tabs?.map((tab, index) => ({
+    tabId: tab,
+    tabName: tabsData?.blocks?.[tab]?.title || `Tab ${index + 1}`,
+  }));
+
   return (
     <>
       {!data.menu_hidden ? (
@@ -104,9 +131,53 @@ const DefaultTabEdit = (props) => {
       ) : (
         ''
       )}
-      <Transition.Group animation="fade" duration={200}>
-        {panes.map((pane) => (activeTab === pane.tabId ? pane.render() : ''))}
-      </Transition.Group>
+      {tabs.length
+        ? tabs?.map((tab, index) => (
+            <Transition
+              key={tab}
+              animation={`slide ${getDirection(index)}`}
+              duration={{ hide: 500, show: 500 }}
+              visible={tab === activeTab}
+              onHide={(event, data) => {
+                if (data.status === 'EXITED') {
+                  setTimeout(() => {
+                    setState({
+                      placeholderHeight: 0,
+                      exitingTab: null,
+                    });
+                  }, 1);
+                }
+              }}
+              onStart={(event, data) => {
+                if (data.status === 'EXITING') {
+                  const exitingTab = document.querySelector(
+                    `.tab-container.tab-${index}`,
+                  );
+                  setState({
+                    placeholderHeight: exitingTab.clientHeight,
+                    exitingTab: tab,
+                  });
+                }
+              }}
+            >
+              <div
+                className={cx(
+                  'tab-container',
+                  `tab-${index}`,
+                  state.placeholderHeight > 0 && state.exitingTab === tab
+                    ? 'exiting'
+                    : '',
+                )}
+              >
+                <TabPaneEdit {...props} tabId={tab} />
+              </div>
+            </Transition>
+          ))
+        : ''}
+      <div
+        id="transition-placeholder"
+        style={{ height: state.placeholderHeight }}
+      />
     </>
   );
 };

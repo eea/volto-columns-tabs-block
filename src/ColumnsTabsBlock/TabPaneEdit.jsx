@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from '@plone/volto/components';
-import { BlocksForm } from '@eeacms/volto-blocks-form/components';
-import { emptyBlocksForm } from '@eeacms/volto-blocks-form/helpers';
+import BlocksForm from '@plone/volto/components/manage/Blocks/Block/BlocksForm';
+import { emptyBlocksForm } from '@plone/volto/helpers/Blocks/Blocks';
 import { COLUMNS_TABS_BLOCK } from '@eeacms/volto-columns-tabs-block/constants';
 import {
   emptyTabColumns,
@@ -77,6 +77,15 @@ const TabPaneEdit = (props) => {
               : null,
           })}
         >
+          {activeTabData.grid_background_image ? (
+            <img
+              className="bg"
+              src={`${activeTabData.grid_background_image}/@@images/image`}
+              alt="test"
+            />
+          ) : (
+            ''
+          )}
           <Grid.Row
             className={cx(
               'grid-row',
