@@ -1,7 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Menu, Transition } from 'semantic-ui-react';
+import { Icon } from '@plone/volto/components';
 import { TabPaneView } from '@eeacms/volto-columns-tabs-block';
 import cx from 'classnames';
+
+import scrollSVG from '~/icons/scroll.svg';
+
+import rightKeySVG from '@plone/volto/icons/circle-right.svg';
+import leftKeySVG from '@plone/volto/icons/circle-left.svg';
 
 const usePrevious = (value) => {
   const ref = useRef();
@@ -20,6 +26,8 @@ const DefaultTabView = (props) => {
   const { data = {}, activeTab = null, setActiveTab } = props;
   const tabsData = data?.data;
   const tabs = tabsData?.blocks_layout?.items || [];
+  const hasScrollIcon = data.scrollIcon;
+  const color = data.color || 'light';
 
   const prevActiveTab = usePrevious(activeTab);
   const activeTabIndex = tabs.indexOf(activeTab);
@@ -68,12 +76,10 @@ const DefaultTabView = (props) => {
               visible={tab === activeTab}
               onHide={(event, data) => {
                 if (data.status === 'EXITED') {
-                  setTimeout(() => {
-                    setState({
-                      placeholderHeight: 0,
-                      exitingTab: null,
-                    });
-                  }, 1);
+                  setState({
+                    placeholderHeight: 0,
+                    exitingTab: null,
+                  });
                 }
               }}
               onStart={(event, data) => {
@@ -94,6 +100,8 @@ const DefaultTabView = (props) => {
                   `tab-${index}`,
                   state.placeholderHeight > 0 && state.exitingTab === tab
                     ? 'exiting'
+                    : state.placeholderHeight > 0 && state.exitingTab !== tab
+                    ? 'entering'
                     : '',
                 )}
               >
@@ -106,15 +114,56 @@ const DefaultTabView = (props) => {
         id="transition-placeholder"
         style={{ height: state.placeholderHeight }}
       />
-      <div className="carousel-menu">
+      <div className={cx('carousel-slider', color)}>
+        {activeTabIndex > 0 ? (
+          <Icon
+            className="left-arrow"
+            onClick={() => {
+              setActiveTab(tabs[activeTabIndex - 1]);
+            }}
+            name={leftKeySVG}
+            size="30px"
+            color="white"
+          />
+        ) : (
+          <span />
+        )}
+        {activeTabIndex < tabs.length - 1 ? (
+          <Icon
+            className="right-arrow"
+            onClick={() => {
+              setActiveTab(tabs[activeTabIndex + 1]);
+            }}
+            name={rightKeySVG}
+            size="30px"
+            color="white"
+          />
+        ) : (
+          <span />
+        )}
+      </div>
+      <div className={cx('carousel-menu', color)}>
         <Menu attached>
-          {panes.map((pane) => (
+          {panes.map((pane, index) => (
             <Menu.Item
               active={pane.tabId === activeTab}
               onClick={() => {
                 setActiveTab(pane.tabId);
               }}
-            ></Menu.Item>
+            >
+              {hasScrollIcon &&
+              panes.length % 2 > 0 &&
+              index + 1 === Math.round(panes.length / 2) ? (
+                <Icon
+                  className="scroll"
+                  name={scrollSVG}
+                  size="30px"
+                  color="white"
+                />
+              ) : (
+                ''
+              )}
+            </Menu.Item>
           ))}
         </Menu>
       </div>

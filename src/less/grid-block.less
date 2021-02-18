@@ -8,14 +8,16 @@
 .rounded {
   img {
     border-radius: 100%;
+    width: 500px;
+    height: 500px;
   }
 }
 
 .tab-container {
-  margin-top: 1rem;
+  // margin-top: 1rem;
 
-  &.transition.out.exiting,
-  &.transition.in {
+  &.exiting,
+  &.entering {
     height: 0;
   }
 }
@@ -46,23 +48,17 @@
       content: '';
       width: 100%;
       height: 1px;
-      background-color: #fff;
     }
-
 
     .active.item, .item {
       position: relative;
-      background-color: #fff;
       border: none;
       padding: 0;
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       border-radius: 100% !important;
       &::before, &::after {
         display: none;
-      }
-      &:hover {
-        background-color: #fff;
       }
     }
 
@@ -71,13 +67,134 @@
         position: absolute;
         display: block;
         content: '';
-        width: 18px;
-        height: 18px;
+        width: 19px;
+        height: 19px;
         top: -5px;
         left: -5px;
-        border: 1px solid #fff;
         border-radius: 100%;
       }
+    }
+
+    .item .scroll {
+      height: 30px;
+      width: auto;
+      position: absolute;
+      top: -40px;
+      left: -11px;
+      pointer-events: none;
+    }
+  }
+
+  &.light {
+    .ui.menu {
+      &::before {
+        background-color: #fff;
+      }
+
+      .active.item, .item {
+        background-color: #fff;
+
+        &:hover {
+          background-color: #fff;
+        }
+      }
+
+      .active.item::before {
+        border: 1px solid #fff;
+      }
+
+      .item .scroll {
+        fill: #fff !important;
+      }
+    }
+  }
+
+  &.dark {
+    .ui.menu {
+      &::before {
+        background-color: #000;
+      }
+
+      .active.item, .item {
+        background-color: #000;
+
+        &:hover {
+          background-color: #000;
+        }
+      }
+
+      .active.item::before {
+        border: 1px solid #000;
+      }
+
+      .item .scroll {
+        fill: #000 !important;
+      }
+    }
+  }
+
+  &.grey {
+    .ui.menu {
+      &::before {
+        background-color: #ccc;
+      }
+
+      .active.item, .item {
+        background-color: #ccc;
+
+        &:hover {
+          background-color: #ccc;
+        }
+      }
+
+      .active.item::before {
+        border: 1px solid #ccc;
+      }
+
+      .item .scroll {
+        fill: #ccc !important;
+      }
+    }
+  }
+}
+
+.carousel-slider {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .icon {
+    cursor: pointer;
+  }
+
+  .left-arrow {
+    position: relative;
+    left: 20px;
+  }
+
+  .right-arrow {
+    position: relative;
+    right: 20px;
+  }
+
+  &.light {
+    .icon {
+      fill: #fff !important;
+    }
+  }
+
+  &.dark {
+    .icon {
+      fill: #000 !important;
+    }
+  }
+
+  &.grey {
+    .icon {
+      fill: #ccc !important;
     }
   }
 }
@@ -89,6 +206,8 @@
   }
 
   .ui.grid.grid-block {
+    margin-top: 0;
+    margin-bottom: 0;
     margin-right: 0;
     margin-left: 0;
     position: relative;

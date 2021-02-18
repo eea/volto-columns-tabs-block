@@ -81,7 +81,7 @@ const TabPaneEdit = (props) => {
             <img
               className="bg"
               src={`${activeTabData.grid_background_image}/@@images/image`}
-              alt="test"
+              alt={activeTabData.title || 'Background'}
             />
           ) : (
             ''

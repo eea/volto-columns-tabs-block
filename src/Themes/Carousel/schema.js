@@ -4,18 +4,23 @@ export default {
     {
       id: 'default',
       title: 'Default',
-      fields: ['auto', 'duration'],
+      fields: ['scrollIcon', 'color'],
     },
   ],
   properties: {
-    auto: {
-      title: 'Auto transition',
+    scrollIcon: {
+      title: 'Scroll icon',
       type: 'boolean',
     },
-    duration: {
-      title: 'Transition duration',
-      type: 'text',
-      description: 'Applies only if auto transition is enabled',
+    color: {
+      title: 'Color',
+      type: 'array',
+      choices: [
+        ['light', 'Light'],
+        ['dark', 'Dark'],
+        ['grey', 'Grey'],
+      ],
+      default: 'light',
     },
   },
   required: [],
