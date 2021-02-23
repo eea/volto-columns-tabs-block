@@ -17,6 +17,7 @@
     "url": "git@github.com:eea/volto-columns-tabs-block.git"
   },
   "dependencies": {
+    "css-to-react-native": "3.0.0",
     "react-color": "~2.18.1"
   },
   "scripts": {
