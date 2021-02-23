@@ -4,8 +4,7 @@ import { Icon } from '@plone/volto/components';
 import { TabPaneView } from '@eeacms/volto-columns-tabs-block';
 import cx from 'classnames';
 
-import scrollSVG from '~/icons/scroll.svg';
-
+import scrollSVG from '@eeacms/volto-columns-tabs-block/icons/scroll.svg';
 import rightKeySVG from '@plone/volto/icons/circle-right.svg';
 import leftKeySVG from '@plone/volto/icons/circle-left.svg';
 
