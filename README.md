@@ -31,7 +31,7 @@ Demo GIF
    ],
 
    "dependencies": {
-      "@eeacms/volto-columns-tabs-block": "^1.1.0"
+      "@eeacms/volto-columns-tabs-block": "^1.2.0"
    }
    ```
 
