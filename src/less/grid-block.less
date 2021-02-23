@@ -6,10 +6,22 @@
 }
 
 .rounded {
-  img {
+  .grid-column-block p.image {
+    width: 100%;
+    overflow: hidden;
     border-radius: 100%;
-    width: 500px;
-    height: 500px;
+    position: relative;
+
+    img {
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .grid-column-block p.image:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
   }
 }
 
