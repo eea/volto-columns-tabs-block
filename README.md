@@ -1,7 +1,7 @@
-# volto-addon-template
-[![Releases](https://img.shields.io/github/v/release/eea/volto-addon-template)](https://github.com/eea/volto-addon-template/releases)
-[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-addon-template%2Fmaster&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-addon-template/job/master/display/redirect)
-[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-addon-template%2Fdevelop&subject=develop)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-addon-template/job/develop/display/redirect)
+# volto-columns-tabs-block
+[![Releases](https://img.shields.io/github/v/release/eea/volto-columns-tabs-block)](https://github.com/eea/volto-columns-tabs-block/releases)
+[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons/volto-columns-tabs-block/master&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-columns-tabs-block/job/master/display/redirect)
+[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons/volto-columns-tabs-block/develop&subject=develop)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-columns-tabs-block/job/develop/display/redirect)
 
 [Volto](https://github.com/plone/volto) add-on
 
@@ -17,21 +17,21 @@ Demo GIF
 
    ```
    $ npm install -g yo @plone/generator-volto
-   $ yo @plone/volto my-volto-project --addon @eeacms/volto-addon-template
+   $ yo @plone/volto my-volto-project --addon @eeacms/volto-columns-tabs-block
 
    $ cd my-volto-project
-   $ yarn add -W @eeacms/volto-addon-template
+   $ yarn add -W @eeacms/volto-columns-tabs-block        // Not yet available
    ```
 
 1. If you already have a volto project, just update `package.json`:
 
    ```JSON
    "addons": [
-       "@eeacms/volto-addon-template"
+      "@eeacms/volto-columns-tabs-block"
    ],
 
    "dependencies": {
-       "@eeacms/volto-addon-template": "^1.0.0"
+      "@eeacms/volto-columns-tabs-block": "^1.1.0"
    }
    ```
 
@@ -48,14 +48,14 @@ Demo GIF
 
 ## How to contribute
 
-See [DEVELOP.md](https://github.com/eea/volto-addon-template/blob/master/DEVELOP.md).
+See [DEVELOP.md](https://github.com/eea/volto-columns-tabs-block/blob/master/DEVELOP.md).
 
 ## Copyright and license
 
 The Initial Owner of the Original Code is European Environment Agency (EEA).
 All Rights Reserved.
 
-See [LICENSE.md](https://github.com/eea/volto-addon-template/blob/master/LICENSE.md) for details.
+See [LICENSE.md](https://github.com/eea/volto-columns-tabs-block/blob/master/LICENSE.md) for details.
 
 ## Funding
 
