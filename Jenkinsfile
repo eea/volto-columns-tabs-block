@@ -2,11 +2,11 @@ pipeline {
   agent any
 
   environment {
-        GIT_NAME = "volto-addon-template"
-        NAMESPACE = "@eeacms"
-        SONARQUBE_TAGS = "volto.eea.europa.eu"
-        DEPENDENCIES = ""
-    }
+    GIT_NAME = "volto-columns-tabs-block"
+    NAMESPACE = "@eeacms"
+    SONARQUBE_TAGS = "volto.eea.europa.eu"
+    DEPENDENCIES = ""
+  }
 
   stages {
 
