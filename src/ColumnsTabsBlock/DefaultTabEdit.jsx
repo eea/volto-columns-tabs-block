@@ -43,7 +43,7 @@ const DefaultTabEdit = (props) => {
     const newData = {
       ...emptyTab(tabsData),
     };
-    const items = newData.blocks_layout.items;
+    // const items = newData.blocks_layout.items;
     onChangeBlock(block, {
       ...data,
       data: {
