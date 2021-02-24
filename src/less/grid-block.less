@@ -1,10 +1,6 @@
 @import './globals.less';
 @import './grid-block-container.less';
 
-.mb-1 {
-  margin-bottom: 1rem !important;
-}
-
 .rounded {
   .grid-column-block p.image {
     position: relative;
@@ -14,6 +10,8 @@
     box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.6);
 
     img {
+      position: absolute;
+      height: 100%;
       top: 0;
       left: 0;
     }
@@ -24,19 +22,6 @@
     padding-bottom: 100%;
     content: '';
   }
-}
-
-.tab-container {
-  // margin-top: 1rem;
-
-  &.exiting,
-  &.entering {
-    height: 0;
-  }
-}
-
-.transition-placeholder {
-  width: 100%;
 }
 
 .carousel-menu {
@@ -219,11 +204,16 @@
 }
 
 .columns-tabs-container {
+  .ui.menu:after {
+    display: none;
+  }
+
   .ui.segment.transition {
     padding: 0;
   }
 
   .ui.grid.grid-block {
+    width: 100%;
     position: relative;
     overflow: hidden;
     margin-top: 0;

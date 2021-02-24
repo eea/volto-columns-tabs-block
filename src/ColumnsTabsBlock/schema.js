@@ -1,26 +1,57 @@
-export const ColumnTabsSchema = (themes = []) => ({
-  title: 'Column tabs block',
-  fieldsets: [
-    {
-      id: 'default',
-      title: 'Default',
-      fields: ['theme', 'menu_hidden'],
+export const ColumnTabsSchema = (props, themes = []) => {
+  return {
+    title: 'Column tabs block',
+    fieldsets: [
+      {
+        id: 'default',
+        title: 'Default',
+        fields: [
+          'theme',
+          'initial_active_tab',
+          'menu_title',
+          'menu_alignment',
+          'menu_hidden',
+        ],
+      },
+    ],
+    properties: {
+      theme: {
+        title: 'Select a theme',
+        type: 'array',
+        choices: [...themes],
+        default: 'default',
+      },
+      initial_active_tab: {
+        title: 'Initial active tab',
+        type: 'array',
+        choices:
+          props.data?.data?.blocks_layout?.items?.map((id, index) => [
+            index,
+            `Tab ${index + 1}`,
+          ]) || [],
+      },
+      menu_title: {
+        title: 'Menu title',
+        type: 'text',
+      },
+      menu_alignment: {
+        title: 'Menu alignment',
+        type: 'array',
+        choices: [
+          ['flex-start', 'Left'],
+          ['center', 'Center'],
+          ['flex-end', 'Right'],
+          ['space-between', 'Space between'],
+        ],
+      },
+      menu_hidden: {
+        title: 'Menu hidden',
+        type: 'boolean',
+      },
     },
-  ],
-  properties: {
-    theme: {
-      title: 'Select a theme',
-      type: 'array',
-      choices: [...themes],
-      default: 'default',
-    },
-    menu_hidden: {
-      title: 'Menu hidden',
-      type: 'boolean',
-    },
-  },
-  required: [],
-});
+    required: [],
+  };
+};
 
 export const TabSchema = () => ({
   title: 'Tab block',

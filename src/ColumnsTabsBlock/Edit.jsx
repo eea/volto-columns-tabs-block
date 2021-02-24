@@ -280,7 +280,7 @@ class Edit extends React.Component {
             <div className="columns-tabs-sidebar no-inline-form-header">
               <Segment>
                 <header className="header pulled">
-                  <h2>{ColumnTabsSchema(themes).title}</h2>
+                  <h2>{ColumnTabsSchema(this.props, themes).title}</h2>
                 </header>
                 <div className="buttons-wrapper">
                   <Button
@@ -328,7 +328,7 @@ class Edit extends React.Component {
                 </div>
               </Segment>
               <InlineForm
-                schema={ColumnTabsSchema(themes)}
+                schema={ColumnTabsSchema(this.props, themes)}
                 title="Column tabs block"
                 onChangeField={(id, value) => {
                   onChangeBlock(block, {

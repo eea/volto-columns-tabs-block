@@ -31,7 +31,6 @@ const TabPaneView = (props) => {
         textColor: activeTabData.grid_text_color?.active
           ? activeTabData.grid_text_color.color
           : null,
-        // backgroundImage: `url()`,
       })}
     >
       {activeTabData.grid_background_image ? (

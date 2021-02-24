@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Menu, Transition } from 'semantic-ui-react';
+import React from 'react';
+import { Menu } from 'semantic-ui-react';
+import { useSpringCarousel } from 'react-spring-carousel-js';
 import { Icon } from '@plone/volto/components';
 import { TabPaneView } from '@eeacms/volto-columns-tabs-block';
 import cx from 'classnames';
@@ -8,116 +9,62 @@ import scrollSVG from '@eeacms/volto-columns-tabs-block/icons/scroll.svg';
 import rightKeySVG from '@plone/volto/icons/circle-right.svg';
 import leftKeySVG from '@plone/volto/icons/circle-left.svg';
 
-const usePrevious = (value) => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-};
-
 const DefaultTabView = (props) => {
-  const [state, setState] = useState({
-    placeholderHeight: 0,
-    exitingTab: null,
-  });
-  const [prevActiveTabState, setPrevActiveTabState] = useState(null);
   const { data = {}, activeTab = null, setActiveTab } = props;
+  const initialActiveTab = data.initial_active_tab;
   const tabsData = data?.data;
   const tabs = tabsData?.blocks_layout?.items || [];
   const hasScrollIcon = data.scrollIcon;
   const color = data.color || 'light';
 
-  const prevActiveTab = usePrevious(activeTab);
-  const activeTabIndex = tabs.indexOf(activeTab);
-  const prevActiveTabIndex = tabs.indexOf(prevActiveTabState);
+  const panes = tabs?.map((tab, index) => ({
+    id: tab,
+    tabName: tabsData?.blocks?.[tab]?.title || `Tab ${index + 1}`,
+    renderItem: <TabPaneView {...props} tabId={tab} />,
+  }));
 
-  useEffect(() => {
-    // const auto = setInterval(() => {
-    //   if (activeTabIndex < tabs.length - 1) {
-    //     setActiveTab(tabs[activeTabIndex + 1]);
-    //   } else {
-    //     setActiveTab(tabs[0]);
-    //   }
-    // }, 5000);
-    // return () => {
-    //   clearInterval(auto);
-    // };
+  const activeTabIndex = tabs.indexOf(activeTab);
+
+  React.useEffect(() => {
+    if (
+      initialActiveTab &&
+      initialActiveTab < tabs.length &&
+      tabs[initialActiveTab] &&
+      initialActiveTab !== activeTabIndex
+    ) {
+      setActiveTab(tabs[initialActiveTab]);
+    }
+    // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    setPrevActiveTabState(prevActiveTab);
-    /* eslint-disable-next-line */
-  }, [activeTab]);
+  const {
+    carouselFragment,
+    slideToPrevItem,
+    slideToNextItem,
+    slideToItem,
+    useListenToCustomEvent,
+    getCurrentActiveItem,
+  } = useSpringCarousel({
+    initialActiveItem: initialActiveTab,
+    items: [...panes],
+  });
 
-  const getDirection = (index) => {
-    if (prevActiveTabIndex < activeTabIndex) {
-      if (index === activeTabIndex) return 'left';
-      return 'right';
+  useListenToCustomEvent('onSlideChange', (data) => {
+    const currentActiveItem = getCurrentActiveItem();
+    if (activeTab !== currentActiveItem.id) {
+      setActiveTab(currentActiveItem.id);
     }
-    if (index === activeTabIndex) return 'right';
-    return 'left';
-  };
-
-  const panes = tabs?.map((tab, index) => ({
-    tabId: tab,
-    tabName: tabsData?.blocks?.[tab]?.title || `Tab ${index + 1}`,
-  }));
+  });
 
   return (
     <div style={{ position: 'relative' }} className="full-width">
-      {tabs.length
-        ? tabs?.map((tab, index) => (
-            <Transition
-              key={tab}
-              animation={`slide ${getDirection(index)}`}
-              duration={{ hide: 500, show: 500 }}
-              visible={tab === activeTab}
-              onHide={(event, data) => {
-                if (data.status === 'EXITED') {
-                  setState({
-                    placeholderHeight: 0,
-                    exitingTab: null,
-                  });
-                }
-              }}
-              onStart={(event, data) => {
-                if (data.status === 'EXITING') {
-                  const exitingTab = document.querySelector(
-                    `.tab-container.tab-${index}`,
-                  );
-                  setState({
-                    placeholderHeight: exitingTab.clientHeight,
-                    exitingTab: tab,
-                  });
-                }
-              }}
-            >
-              <div
-                className={cx(
-                  'tab-container',
-                  `tab-${index}`,
-                  state.placeholderHeight > 0 && state.exitingTab === tab
-                    ? 'exiting'
-                    : state.placeholderHeight > 0 && state.exitingTab !== tab
-                    ? 'entering'
-                    : '',
-                )}
-              >
-                <TabPaneView {...props} tabId={tab} />
-              </div>
-            </Transition>
-          ))
-        : ''}
-      <div
-        id="transition-placeholder"
-        style={{ height: state.placeholderHeight }}
-      />
+      {carouselFragment}
       <div className={cx('carousel-slider', color)}>
         {activeTabIndex > 0 ? (
           <Icon
             className="left-arrow"
             onClick={() => {
+              slideToPrevItem();
               setActiveTab(tabs[activeTabIndex - 1]);
             }}
             name={leftKeySVG}
@@ -131,6 +78,7 @@ const DefaultTabView = (props) => {
           <Icon
             className="right-arrow"
             onClick={() => {
+              slideToNextItem();
               setActiveTab(tabs[activeTabIndex + 1]);
             }}
             name={rightKeySVG}
@@ -145,9 +93,12 @@ const DefaultTabView = (props) => {
         <Menu attached>
           {panes.map((pane, index) => (
             <Menu.Item
-              active={pane.tabId === activeTab}
+              active={activeTabIndex === index}
               onClick={() => {
-                setActiveTab(pane.tabId);
+                if (activeTabIndex !== index) {
+                  slideToItem(index);
+                  setActiveTab(tabs[index]);
+                }
               }}
             >
               {hasScrollIcon &&
