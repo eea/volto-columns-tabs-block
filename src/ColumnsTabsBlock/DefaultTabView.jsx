@@ -47,7 +47,7 @@ const DefaultTabView = (props) => {
           ) : (
             ''
           )}
-          <div style={{ display: 'flex', flexFlow: 'row' }}>
+          <div style={{ display: 'flex', flexFlow: 'row', flexWrap: 'wrap' }}>
             {panes.map((pane, index) => (
               <Menu.Item
                 name={pane.tabName}
