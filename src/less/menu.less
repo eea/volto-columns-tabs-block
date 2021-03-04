@@ -13,11 +13,11 @@
 
   .ui.menu {
     flex-wrap: wrap;
-    margin: @menuMargin;
-    box-shadow: @menuBoxShadow;
-    background-color: @menuBackgroundColor;
     border: @menuBorder;
+    margin: @menuMargin;
+    background-color: @menuBackgroundColor;
     border-radius: @menuBorderRadius;
+    box-shadow: @menuBoxShadow;
 
     &.ui.container > * {
       margin-bottom: initial !important;
@@ -32,42 +32,41 @@
     }
 
     .item {
+      padding: @menuItemPadding;
+      background: @menuItemBackground;
+      color: @menuItemColor;
+      font-family: @menuItemFontFamily;
       font-size: @menuItemFontSize;
       font-weight: @menuItemFontWeight;
-      font-family: @menuItemFontFamily;
-      color: @menuItemColor;
-      background: @menuItemBackground;
-      padding: @menuItemPadding;
 
       &:hover {
-        color: @menuItemHoverColor;
         background: @menuItemHoverBackground;
+        color: @menuItemHoverColor;
 
         &.menu-title {
-          color: @menuTitleHoverColor;
           background: @menuTitleHoverBackground;
+          color: @menuTitleHoverColor;
         }
       }
 
       &.active {
-        font-weight: @menuActiveItemFontWeight;
-        font-family: @menuItemFontFamily;
-        color: @menuActiveItemColor;
         background: @menuActiveItemBackground;
+        color: @menuActiveItemColor;
+        font-family: @menuItemFontFamily;
+        font-weight: @menuActiveItemFontWeight;
 
         &:hover {
-          color: @menuActiveItemHoverColor;
           background: @menuActiveItemHoverBackground;
+          color: @menuActiveItemHoverColor;
         }
       }
 
       &.menu-title {
+        background: @menuTitleBackgrounnd;
+        color: @menuTitleColor;
         font-size: @menuTitleFontSize;
         font-weight: @menuTitleFontWeight;
-        color: @menuTitleColor;
-        background: @menuTitleBackgrounnd;
       }
-
 
       &::before {
         width: @menuItemDividerWidth;
