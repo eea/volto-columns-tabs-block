@@ -5,13 +5,12 @@ export const ColumnTabsSchema = (props, themes = []) => {
       {
         id: 'default',
         title: 'Default',
-        fields: [
-          'theme',
-          'initial_active_tab',
-          'menu_title',
-          'menu_alignment',
-          'menu_hidden',
-        ],
+        fields: ['theme', 'initial_active_tab', 'full_width'],
+      },
+      {
+        id: 'menu',
+        title: 'Menu',
+        fields: ['menu_title', 'menu_alignment', 'menu_hidden'],
       },
     ],
     properties: {
@@ -30,6 +29,10 @@ export const ColumnTabsSchema = (props, themes = []) => {
             `Tab ${index + 1}`,
           ]) || [],
       },
+      full_width: {
+        title: 'Take full width',
+        type: 'boolean',
+      },
       menu_title: {
         title: 'Menu title',
         type: 'text',
@@ -38,9 +41,9 @@ export const ColumnTabsSchema = (props, themes = []) => {
         title: 'Menu alignment',
         type: 'array',
         choices: [
-          ['flex-start', 'Left'],
+          ['left', 'Left'],
           ['center', 'Center'],
-          ['flex-end', 'Right'],
+          ['right', 'Right'],
           ['space-between', 'Space between'],
         ],
       },

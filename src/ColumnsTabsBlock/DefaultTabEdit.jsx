@@ -1,8 +1,10 @@
 import React from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Tab } from 'semantic-ui-react';
 import { emptyTab } from '@eeacms/volto-columns-tabs-block/helpers';
-import TabPaneEdit from './TabPaneEdit';
-import { useTransitionCarousel } from 'react-spring-carousel-js';
+import { TabPaneEdit } from '@eeacms/volto-columns-tabs-block';
+import cx from 'classnames';
+
+import '@eeacms/volto-columns-tabs-block/less/menu.less';
 
 const DefaultTabEdit = (props) => {
   const {
@@ -14,47 +16,25 @@ const DefaultTabEdit = (props) => {
   } = props;
   const tabsData = data?.data;
   const tabs = tabsData?.blocks_layout?.items || [];
-
-  const panes = tabs?.map((tab, index) => ({
-    id: tab,
-    tabName: tabsData?.blocks?.[tab]?.title || `Tab ${index + 1}`,
-    renderItem: <TabPaneEdit {...props} tabId={tab} />,
-  }));
-
-  const {
-    carouselFragment,
-    slideToItem,
-    useListenToCustomEvent,
-  } = useTransitionCarousel({
-    items: [...panes],
-  });
-
   const activeTabIndex = tabs.indexOf(activeTab);
-
-  useListenToCustomEvent('onLeftSwipe', (data) => {
-    updateState({ activeTab: tabs[activeTabIndex + 1] });
-  });
-
-  useListenToCustomEvent('onRightSwipe', (data) => {
-    updateState({ activeTab: tabs[activeTabIndex - 1] });
-  });
 
   const addNewTab = () => {
     const newData = {
       ...emptyTab(tabsData),
     };
-    // const items = newData.blocks_layout.items;
+    const items = newData.blocks_layout.items;
     onChangeBlock(block, {
       ...data,
       data: {
         ...newData,
       },
     });
-    // TODO: Fix this
-    // updateState({
-    //   activeTab: items[items.length - 1],
-    // });
-    // slideToItem(items[items.length - 1]);
+    updateState({
+      activeTab: items[items.length - 1],
+      activeBlock: null,
+      activeColumn: null,
+      colSelections: {},
+    });
   };
 
   const deleteTab = (id) => {
@@ -77,68 +57,91 @@ const DefaultTabEdit = (props) => {
         ...newData,
       },
     });
-    // TODO: Fix this
-    // updateState({
-    //   activeTab: items[items.length - 1],
-    // });
-    // slideToItem(items.length - 1);
+    updateState({
+      activeTab: items[items.length - 1],
+      activeBlock: null,
+      activeColumn: null,
+      colSelections: {},
+    });
   };
 
-  return (
-    <>
-      {!data.menu_hidden ? (
-        <Menu
-          pointing
-          secondary
-          style={{ justifyContent: data.menu_alignment || 'left' }}
-        >
-          {data.menu_title ? (
-            <Menu.Header>
-              <Menu.Item>{data.menu_title}</Menu.Item>
-            </Menu.Header>
+  const panes = tabs?.map((tab, index) => ({
+    id: tab,
+    menuItem: () =>
+      !data.menu_hidden ? (
+        <>
+          {index === 0 && data.menu_title ? (
+            <Menu.Item className="menu-title">{data.menu_title}</Menu.Item>
           ) : (
             ''
           )}
-          <div style={{ display: 'flex', flexFlow: 'row' }}>
-            {panes.map((pane, index) => (
-              <Menu.Item
-                name={pane.tabName}
-                active={pane.id === activeTab}
-                onClick={() => {
-                  updateState({
-                    activeTab: pane.id,
-                    activeBlock: null,
-                    activeColumn: null,
-                    colSelections: {},
-                  });
-                  slideToItem(index);
-                }}
-              >
-                {pane.tabName}
+          <Menu.Item
+            name={tabsData?.blocks?.[tab]?.title || `Tab ${index + 1}`}
+            active={tab === activeTab}
+            onClick={() => {
+              updateState({
+                activeTab: tabs[index],
+                activeBlock: null,
+                activeColumn: null,
+                colSelections: {},
+              });
+            }}
+          >
+            {tabsData?.blocks?.[tab]?.title || `Tab ${index + 1}`}
+          </Menu.Item>
+          {index === tabs.length - 1 ? (
+            <>
+              <Menu.Item name="addition" onClick={addNewTab}>
+                +
               </Menu.Item>
-            ))}
-            <Menu.Item name="addition" onClick={addNewTab}>
-              +
-            </Menu.Item>
-            {tabs.length > 1 ? (
-              <Menu.Item
-                name="minus"
-                onClick={() => {
-                  deleteTab();
-                }}
-              >
-                -
-              </Menu.Item>
-            ) : (
-              ''
-            )}
-          </div>
-        </Menu>
+              {tabs.length > 1 ? (
+                <Menu.Item
+                  name="minus"
+                  onClick={() => {
+                    deleteTab();
+                  }}
+                >
+                  -
+                </Menu.Item>
+              ) : (
+                ''
+              )}
+            </>
+          ) : (
+            ''
+          )}
+        </>
       ) : (
         ''
-      )}
-      {carouselFragment}
-    </>
+      ),
+    render: () => (
+      <Tab.Pane>
+        <TabPaneEdit {...props} tabId={tab} />
+      </Tab.Pane>
+    ),
+  }));
+
+  return (
+    <div
+      className={cx({
+        'full-width':
+          data.full_width || tabsData.blocks?.[activeTab]?.row_ui_container,
+      })}
+    >
+      <Tab
+        menu={{ className: data.menu_alignment || 'left' }}
+        panes={panes}
+        activeIndex={activeTabIndex}
+        onTabChange={(event, data) => {
+          updateState({
+            activeTab: tabs[data.activeIndex],
+            activeBlock: null,
+            activeColumn: null,
+            colSelections: {},
+          });
+        }}
+      />
+    </div>
   );
 };
 

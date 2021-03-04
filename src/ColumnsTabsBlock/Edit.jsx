@@ -25,7 +25,6 @@ import '@eeacms/volto-columns-tabs-block/less/grid-block.less';
 class Edit extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.initTab = this.initTab.bind(this);
     this.createFrom = this.createFrom.bind(this);
     this.onChangeTabField = this.onChangeTabField.bind(this);
@@ -43,58 +42,6 @@ class Edit extends React.Component {
     };
     this.gridBlockContainer = React.createRef();
     this.blocksState = {};
-  }
-
-  componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside, false);
-  }
-
-  UNSAFE_componentWillMount() {
-    document.removeEventListener('mousedown', this.handleClickOutside, false);
-  }
-
-  handleClickOutside(event) {
-    const sidebars = document.querySelectorAll('.sidebar-container');
-    const modals = document.querySelectorAll('.ui.modal');
-    const blocks = document.querySelectorAll('.block-editor-wrapper');
-    let inSidebar = false;
-    let inModal = false;
-    let inBlock = false;
-
-    for (let sidebar of sidebars) {
-      if (sidebar.contains(event.target) && !inSidebar) {
-        inSidebar = true;
-        break;
-      }
-    }
-
-    for (let modal of modals) {
-      if (modal.contains(event.target) && !inModal) {
-        inModal = true;
-        break;
-      }
-    }
-
-    for (let block of blocks) {
-      if (block.contains(event.target) && !inBlock) {
-        inBlock = true;
-        break;
-      }
-    }
-
-    if (
-      this.gridBlockContainer &&
-      this.gridBlockContainer.current &&
-      (!this.gridBlockContainer.current.contains(event.target) || !inBlock) &&
-      !inSidebar &&
-      !inModal
-    ) {
-      this.setState({
-        activeColumn: null,
-        activeBlock: null,
-        colSelections: {},
-      });
-    }
   }
 
   initTab = () => {

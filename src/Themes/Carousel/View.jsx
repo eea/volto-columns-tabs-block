@@ -1,19 +1,25 @@
 import React from 'react';
+import loadable from '@loadable/component';
 import { Menu } from 'semantic-ui-react';
-import { useSpringCarousel } from 'react-spring-carousel-js';
 import { Icon } from '@plone/volto/components';
 import { TabPaneView } from '@eeacms/volto-columns-tabs-block';
+import { BodyClass } from '@plone/volto/helpers';
 import cx from 'classnames';
 
 import scrollSVG from '@eeacms/volto-columns-tabs-block/icons/scroll.svg';
 import rightKeySVG from '@plone/volto/icons/circle-right.svg';
 import leftKeySVG from '@plone/volto/icons/circle-left.svg';
+import '@eeacms/volto-columns-tabs-block/less/carousel.less';
+import 'slick-carousel/slick/slick.css';
+
+const Slider = loadable(() => import('react-slick'));
 
 const DefaultTabView = (props) => {
+  const slider = React.useRef(null);
   const { data = {}, activeTab = null, setActiveTab } = props;
-  const initialActiveTab = data.initial_active_tab;
   const tabsData = data?.data;
   const tabs = tabsData?.blocks_layout?.items || [];
+  const activeTabIndex = tabs.indexOf(activeTab);
   const hasScrollIcon = data.scrollIcon;
   const color = data.color || 'light';
 
@@ -23,49 +29,40 @@ const DefaultTabView = (props) => {
     renderItem: <TabPaneView {...props} tabId={tab} />,
   }));
 
-  const activeTabIndex = tabs.indexOf(activeTab);
-
-  React.useEffect(() => {
-    if (
-      initialActiveTab &&
-      initialActiveTab < tabs.length &&
-      tabs[initialActiveTab] &&
-      initialActiveTab !== activeTabIndex
-    ) {
-      setActiveTab(tabs[initialActiveTab]);
-    }
-    // eslint-disable-next-line
-  }, []);
-
-  const {
-    carouselFragment,
-    slideToPrevItem,
-    slideToNextItem,
-    slideToItem,
-    useListenToCustomEvent,
-    getCurrentActiveItem,
-  } = useSpringCarousel({
-    initialActiveItem: initialActiveTab,
-    items: [...panes],
-  });
-
-  useListenToCustomEvent('onSlideChange', (data) => {
-    const currentActiveItem = getCurrentActiveItem();
-    if (activeTab !== currentActiveItem.id) {
-      setActiveTab(currentActiveItem.id);
-    }
-  });
+  const settings = {
+    speed: 400,
+    arrows: false,
+    swipe: true,
+    touchMove: true,
+    autoplay: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    lazyLoad: 'ondemand',
+    beforeChange: (oldIndex, index) => {
+      setActiveTab(tabs[index]);
+    },
+  };
 
   return (
-    <div style={{ position: 'relative' }} className="full-width">
-      {carouselFragment}
+    <div
+      style={{ position: 'relative' }}
+      className={cx({
+        'full-width':
+          data.full_width || tabsData.blocks?.[activeTab]?.row_ui_container,
+      })}
+    >
+      <BodyClass className="has-carousel" />
+      <Slider {...settings} ref={slider}>
+        {panes.length ? panes.map((pane) => pane.renderItem) : ''}
+      </Slider>
       <div className={cx('carousel-slider', color)}>
         {activeTabIndex > 0 ? (
           <Icon
             className="left-arrow"
             onClick={() => {
-              slideToPrevItem();
-              setActiveTab(tabs[activeTabIndex - 1]);
+              if (slider.current) {
+                slider.current.slickGoTo(activeTabIndex - 1);
+              }
             }}
             name={leftKeySVG}
             size="30px"
@@ -78,8 +75,9 @@ const DefaultTabView = (props) => {
           <Icon
             className="right-arrow"
             onClick={() => {
-              slideToNextItem();
-              setActiveTab(tabs[activeTabIndex + 1]);
+              if (slider.current) {
+                slider.current.slickGoTo(activeTabIndex + 1);
+              }
             }}
             name={rightKeySVG}
             size="30px"
@@ -95,9 +93,8 @@ const DefaultTabView = (props) => {
             <Menu.Item
               active={activeTabIndex === index}
               onClick={() => {
-                if (activeTabIndex !== index) {
-                  slideToItem(index);
-                  setActiveTab(tabs[index]);
+                if (slider.current && activeTabIndex !== index) {
+                  slider.current.slickGoTo(index);
                 }
               }}
             >

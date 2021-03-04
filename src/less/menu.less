@@ -1,0 +1,106 @@
+@import 'globals.less';
+
+@addon: 'volto-addons';
+@addontype: 'columnstabsblock';
+@addonelement: 'menu';
+
+.loadAddonVariables();
+
+.columns-tabs-container {
+  .ui.segment.tab {
+    padding: 0;
+  }
+
+  .ui.menu {
+    flex-wrap: wrap;
+    margin: @menuMargin;
+    box-shadow: @menuBoxShadow;
+    background-color: @menuBackgroundColor;
+    border: @menuBorder;
+    border-radius: @menuBorderRadius;
+
+    &.ui.container > * {
+      margin-bottom: initial !important;
+    }
+
+    &.menu-hidden {
+      display: none;
+    }
+
+    &:after {
+      display: none;
+    }
+
+    .item {
+      font-size: @menuItemFontSize;
+      font-weight: @menuItemFontWeight;
+      font-family: @menuItemFontFamily;
+      color: @menuItemColor;
+      background: @menuItemBackground;
+      padding: @menuItemPadding;
+
+      &:hover {
+        color: @menuItemHoverColor;
+        background: @menuItemHoverBackground;
+
+        &.menu-title {
+          color: @menuTitleHoverColor;
+          background: @menuTitleHoverBackground;
+        }
+      }
+
+      &.active {
+        font-weight: @menuActiveItemFontWeight;
+        font-family: @menuItemFontFamily;
+        color: @menuActiveItemColor;
+        background: @menuActiveItemBackground;
+
+        &:hover {
+          color: @menuActiveItemHoverColor;
+          background: @menuActiveItemHoverBackground;
+        }
+      }
+
+      &.menu-title {
+        font-size: @menuTitleFontSize;
+        font-weight: @menuTitleFontWeight;
+        color: @menuTitleColor;
+        background: @menuTitleBackgrounnd;
+      }
+
+
+      &::before {
+        width: @menuItemDividerWidth;
+        background: @menuItemDividerBackground;
+      }
+
+      &:first-child {
+        padding: @menuFirstItemPadding;
+      }
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &.left {
+      justify-content: flex-start;
+    }
+
+    &.right {
+      justify-content: flex-end;
+    }
+
+    &.center {
+      justify-content: center;
+    }
+
+    &.space-between {
+      .menu-title {
+        margin-right: auto;
+      }
+    }
+  }
+}
+
+.loadAddonOverrides();

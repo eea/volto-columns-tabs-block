@@ -3,6 +3,7 @@ import { getTabs } from '@eeacms/volto-columns-tabs-block/helpers';
 import { COLUMNS_TABS_BLOCK } from '@eeacms/volto-columns-tabs-block/constants';
 import { blocks } from '~/config';
 import DefaultTabView from './DefaultTabView';
+import { BodyClass } from '@plone/volto/helpers';
 
 import '@eeacms/volto-columns-tabs-block/less/grid-block.less';
 
@@ -17,7 +18,9 @@ const initTab = (data) => {
 };
 
 const View = (props) => {
-  const [activeTab, setActiveTab] = useState(initTab(props.data));
+  const { data = {} } = props;
+  const [activeTab, setActiveTab] = useState(initTab(data));
+  const tabsData = data?.data;
   const theme = props.data.theme || 'default';
 
   const RenderTabEdit =
@@ -26,6 +29,14 @@ const View = (props) => {
 
   return (
     <div className="columns-tabs-container">
+      <BodyClass
+        className={
+          props.data.full_width ||
+          tabsData.blocks?.[activeTab]?.row_ui_container
+            ? 'overlay-scrollbar'
+            : ''
+        }
+      />
       <RenderTabEdit
         {...props}
         activeTab={activeTab}

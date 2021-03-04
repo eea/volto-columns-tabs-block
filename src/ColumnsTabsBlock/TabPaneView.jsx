@@ -20,7 +20,11 @@ const TabPaneView = (props) => {
   return (
     <Grid
       columns={grid_size}
-      className={cx('grid-block', getClasses(activeTabData.grid_class_name))}
+      className={cx(
+        'grid-block',
+        getClasses(activeTabData.grid_class_name),
+        activeTabData.row_ui_container ? 'row-ui-container' : '',
+      )}
       style={getStyle({
         style: activeTabData.grid_css?.style,
         margin: activeTabData.grid_margin,

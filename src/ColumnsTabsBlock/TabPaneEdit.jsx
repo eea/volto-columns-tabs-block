@@ -64,7 +64,10 @@ const TabPaneEdit = (props) => {
       ) : (
         <Grid
           columns={grid_size}
-          className={cx('grid-block')}
+          className={cx(
+            'grid-block',
+            activeTabData.row_ui_container ? 'row-ui-container' : '',
+          )}
           style={getStyle({
             style: activeTabData.grid_css?.style,
             margin: activeTabData.grid_margin,
