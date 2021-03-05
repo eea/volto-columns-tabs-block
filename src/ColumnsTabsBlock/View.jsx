@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getTabs } from '@eeacms/volto-columns-tabs-block/helpers';
 import { COLUMNS_TABS_BLOCK } from '@eeacms/volto-columns-tabs-block/constants';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 import DefaultTabView from './DefaultTabView';
 import { BodyClass } from '@plone/volto/helpers';
 
@@ -23,8 +23,10 @@ const View = (props) => {
   const tabsData = data?.data;
   const theme = props.data.theme || 'default';
 
+  console.log('HERE', config);
+
   const RenderTabView =
-    blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.tabView ||
+    config.blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.tabView ||
     DefaultTabView;
 
   return (

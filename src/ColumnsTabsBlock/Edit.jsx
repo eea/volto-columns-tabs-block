@@ -7,7 +7,7 @@ import { COLUMNS_TABS_BLOCK } from '@eeacms/volto-columns-tabs-block/constants';
 import { empty, getTabs } from '@eeacms/volto-columns-tabs-block/helpers';
 import cx from 'classnames';
 import { Segment, Button } from 'semantic-ui-react';
-import { blocks, settings } from '~/config';
+import config from '@plone/volto/registry';
 import ColumnVariations from './ColumnVariations';
 import DefaultTabEdit from './DefaultTabEdit';
 import View from './View';
@@ -165,7 +165,7 @@ class Edit extends React.Component {
   render() {
     const { data, block, selected, onChangeBlock, onAddBlock } = this.props;
     const themes = Object.keys(
-      blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes,
+      config.blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes,
     ).map((theme) => [theme, theme]);
     const theme = data.theme || 'default';
     const tabsData = data.data;
@@ -176,7 +176,7 @@ class Edit extends React.Component {
       ? activeTabData?.blocks?.[this.state.activeColumn]
       : {};
 
-    const { variants } = blocks.blocksConfig[COLUMNS_TABS_BLOCK];
+    const { variants } = config.blocks.blocksConfig[COLUMNS_TABS_BLOCK];
 
     const tabProps = {
       ...this.props,
@@ -187,11 +187,11 @@ class Edit extends React.Component {
     };
 
     const RenderTabEdit =
-      blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.tabEdit ||
+      config.blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.tabEdit ||
       DefaultTabEdit;
 
     const themeSchema =
-      blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.schema;
+      config.blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.schema;
 
     return (
       <div
@@ -236,7 +236,7 @@ class Edit extends React.Component {
                     title="Add new block below the columns tabs"
                     onClick={() => {
                       onAddBlock(
-                        settings.defaultBlockType,
+                        config.settings.defaultBlockType,
                         this.props.index + 1,
                       );
                     }}

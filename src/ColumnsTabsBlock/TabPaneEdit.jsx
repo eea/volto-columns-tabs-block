@@ -13,7 +13,7 @@ import { numberToWord } from '@eeacms/volto-columns-tabs-block/grid';
 import { isEmpty } from 'lodash';
 import cx from 'classnames';
 import { Grid, Button } from 'semantic-ui-react';
-import { blocks } from '~/config';
+import config from '@plone/volto/registry';
 import ColumnVariations from './ColumnVariations';
 import EditBlockWrapper from './EditBlockWrapper';
 
@@ -38,7 +38,7 @@ const TabPaneEdit = (props) => {
   const metadata = props.metadata || props.properties;
   const { grid_size } = data;
 
-  const { variants } = blocks.blocksConfig[COLUMNS_TABS_BLOCK];
+  const { variants } = config.blocks.blocksConfig[COLUMNS_TABS_BLOCK];
 
   const createFrom = (initialData) => {
     const { grid_cols } = initialData;
