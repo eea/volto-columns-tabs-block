@@ -18,7 +18,7 @@
 @menuItemFontFamily: 'Raleway', sans-serif;
 @menuItemPadding: 1.4rem;
 
-@menuItemFontSize: 15px;
+@menuItemFontSize: 18px;
 @menuItemFontWeight: normal;
 @menuItemColor: #636363;
 @menuItemBackground: none;

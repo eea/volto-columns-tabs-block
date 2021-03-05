@@ -45,7 +45,7 @@ const DefaultTabView = (props) => {
     <div
       className={cx({
         'full-width':
-          data.full_width || tabsData.blocks?.[activeTab]?.row_ui_container,
+          data.full_width || tabsData.blocks?.[activeTab]?.ui_container,
       })}
     >
       <Tab
@@ -53,9 +53,10 @@ const DefaultTabView = (props) => {
           className: cx(
             data.menu_alignment || 'left',
             data.menu_hidden ? 'menu-hidden' : '',
-            tabsData.blocks?.[activeTab]?.row_ui_container
-              ? 'ui container'
+            data.full_width && !tabsData.blocks?.[activeTab]?.ui_container
+              ? 'in-full-width'
               : '',
+            tabsData.blocks?.[activeTab]?.ui_container ? 'ui container' : '',
           ),
         }}
         panes={panes}

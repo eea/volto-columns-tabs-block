@@ -7,8 +7,8 @@ import { BodyClass } from '@plone/volto/helpers';
 import cx from 'classnames';
 
 import scrollSVG from '@eeacms/volto-columns-tabs-block/icons/scroll.svg';
-import rightKeySVG from '@plone/volto/icons/circle-right.svg';
-import leftKeySVG from '@plone/volto/icons/circle-left.svg';
+import rightKeySVG from '@plone/volto/icons/right-key.svg';
+import leftKeySVG from '@plone/volto/icons/left-key.svg';
 import '@eeacms/volto-columns-tabs-block/less/carousel.less';
 import 'slick-carousel/slick/slick.css';
 
@@ -65,7 +65,7 @@ const DefaultTabView = (props) => {
               }
             }}
             name={leftKeySVG}
-            size="30px"
+            size="60px"
             color="white"
           />
         ) : (
@@ -80,7 +80,7 @@ const DefaultTabView = (props) => {
               }
             }}
             name={rightKeySVG}
-            size="30px"
+            size="60px"
             color="white"
           />
         ) : (

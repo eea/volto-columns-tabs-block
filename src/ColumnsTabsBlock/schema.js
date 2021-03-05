@@ -68,28 +68,16 @@ export const TabSchema = () => ({
       id: 'advanced_grid',
       title: 'Advanced Grid style',
       fields: [
+        'ui_container',
         'grid_class_name',
         'grid_background_image',
-        // 'grid_margin',
-        // 'grid_padding',
-        // 'grid_background_color',
-        // 'grid_text_color',
         'grid_css',
       ],
     },
     {
       id: 'advanced_row',
       title: 'Advanced Row style',
-      fields: [
-        'row_ui_container',
-        'row_vertical_align',
-        'row_justify_content',
-        // 'row_class_name',
-        // 'row_margin',
-        // 'row_padding',
-        // 'row_background_color',
-        'row_css',
-      ],
+      fields: ['row_vertical_align', 'row_justify_content', 'row_css'],
     },
   ],
   properties: {
@@ -108,6 +96,10 @@ export const TabSchema = () => ({
     data: {
       title: 'Columns',
       widget: 'column_layout',
+    },
+    ui_container: {
+      title: 'Container',
+      type: 'boolean',
     },
     grid_class_name: {
       title: 'Class name',

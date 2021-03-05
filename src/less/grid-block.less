@@ -26,12 +26,18 @@
 }
 
 .columns-tabs-container {
+  .grid-block-wrapper {
+    .grid-block-container {
+      &.in-full-width {
+        padding: 0 1rem;
+      }
+    }
+  }
+
   .ui.grid.grid-block {
     position: relative;
-    width: 100%;
 
     .grid-column {
-      padding-right: 0;
 
       .block .block-add-button {
         display: none;
@@ -109,7 +115,6 @@
     .ui.grid.grid-block {
       .grid-column {
         padding-top: 1rem;
-        padding-right: 1rem !important;
         padding-bottom: 1rem;
       }
 
@@ -462,6 +467,6 @@ body {
   }
 }
 
-body {
+body.overlay-scrollbar {
   overflow-y: overlay;
 }

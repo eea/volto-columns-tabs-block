@@ -129,7 +129,19 @@ const DefaultTabEdit = (props) => {
       })}
     >
       <Tab
-        menu={{ className: data.menu_alignment || 'left' }}
+        menu={{
+          className:
+            cx(
+              data.menu_alignment || 'left',
+              data.menu_hidden ? 'menu-hidden' : '',
+              data.full_width && !tabsData.blocks?.[activeTab]?.row_ui_container
+                ? 'in-full-width'
+                : '',
+              tabsData.blocks?.[activeTab]?.row_ui_container
+                ? 'ui container'
+                : '',
+            ) || 'left',
+        }}
         panes={panes}
         activeIndex={activeTabIndex}
         onTabChange={(event, data) => {

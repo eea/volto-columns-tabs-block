@@ -23,7 +23,7 @@ const View = (props) => {
   const tabsData = data?.data;
   const theme = props.data.theme || 'default';
 
-  const RenderTabEdit =
+  const RenderTabView =
     blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.tabView ||
     DefaultTabView;
 
@@ -37,7 +37,7 @@ const View = (props) => {
             : ''
         }
       />
-      <RenderTabEdit
+      <RenderTabView
         {...props}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
