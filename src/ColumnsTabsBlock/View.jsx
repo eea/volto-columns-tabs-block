@@ -23,8 +23,6 @@ const View = (props) => {
   const tabsData = data?.data;
   const theme = props.data.theme || 'default';
 
-  console.log('HERE', config);
-
   const RenderTabView =
     config.blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.tabView ||
     DefaultTabView;
