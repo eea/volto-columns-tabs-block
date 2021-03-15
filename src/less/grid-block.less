@@ -27,7 +27,23 @@
 
 .columns-tabs-container {
   .grid-block-wrapper {
+    position: relative;
+    overflow: hidden;
+    img.bg {
+      /* Set up positioning */
+      position: absolute;
+      top: 0;
+      left: 0;
+      /* Set up proportionate scaling */
+      width: 100%;
+      min-width: 1024px;
+      height: auto;
+      /* Set rules to fill background */
+      min-height: 100%;
+      padding: 0;
+    }
     .grid-block-container {
+      margin-top: 1.4rem;
       &.in-full-width {
         padding: 0 1rem;
       }
@@ -93,20 +109,6 @@
           }
         }
       }
-    }
-
-    img.bg {
-      /* Set up positioning */
-      position: absolute;
-      top: 0;
-      left: 0;
-      /* Set up proportionate scaling */
-      width: 100%;
-      min-width: 1024px;
-      height: auto;
-      /* Set rules to fill background */
-      min-height: 100%;
-      padding: 0;
     }
   }
 

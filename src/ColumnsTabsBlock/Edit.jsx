@@ -22,6 +22,8 @@ import hideSVG from '@plone/volto/icons/hide.svg';
 
 import '@eeacms/volto-columns-tabs-block/less/grid-block.less';
 
+import { StyleWrapperEdit } from '@eeacms/volto-block-style/StyleWrapper';
+
 class Edit extends React.Component {
   constructor(props) {
     super(props);
@@ -37,11 +39,18 @@ class Edit extends React.Component {
       activeTab: this.initTab(),
       activeColumn: null,
       activeBlock: null,
+      activeStyleLayer: null,
+      blockStyleVisible: false,
       colSelections: {},
       preview: false,
     };
     this.gridBlockContainer = React.createRef();
     this.blocksState = {};
+    this.styleLayers = [
+      'grid_block_wrapper_style',
+      'grid_block_container_style',
+      'grid_column_wrapper_style',
+    ];
   }
 
   initTab = () => {
@@ -170,7 +179,7 @@ class Edit extends React.Component {
     const theme = data.theme || 'default';
     const tabsData = data.data;
 
-    const activeTabData = tabsData?.blocks?.[this.state.activeTab];
+    const activeTabData = tabsData?.blocks?.[this.state.activeTab] || {};
 
     const activeColumnData = this.state.activeColumn
       ? activeTabData?.blocks?.[this.state.activeColumn]
@@ -180,6 +189,7 @@ class Edit extends React.Component {
 
     const tabProps = {
       ...this.props,
+      theme: data.theme,
       activeTab: this.state.activeTab,
       colSelections: this.state.colSelections,
       onChangeColumnData: this.onChangeColumnData,
@@ -218,6 +228,31 @@ class Edit extends React.Component {
         ) : (
           <RenderTabEdit {...tabProps} />
         )}
+
+        <StyleWrapperEdit
+          selected={selected}
+          isVisible={this.state.blockStyleVisible}
+          setIsVisible={(visibility) => {
+            this.setState({
+              activeStyleLayer: null,
+              blockStyleVisible: visibility,
+            });
+          }}
+          data={
+            activeTabData[this.styleLayers[this.state.activeStyleLayer]] || {}
+          }
+          onChangeValue={(id, value) => {
+            this.onChangeTabField(
+              this.styleLayers[this.state.activeStyleLayer],
+              {
+                ...(activeTabData[
+                  this.styleLayers[this.state.activeStyleLayer]
+                ] || {}),
+                [id]: value,
+              },
+            );
+          }}
+        />
 
         {selected &&
         this.state.activeTab &&
@@ -340,8 +375,30 @@ class Edit extends React.Component {
                   Apply tab template
                 </Button>
               </Segment>
+              <Segment>
+                <Button
+                  style={{ margin: '0 1em' }}
+                  onClick={() => {
+                    this.setState({
+                      activeStyleLayer: 0,
+                      blockStyleVisible: true,
+                    });
+                  }}
+                >
+                  Grid wrapper style
+                </Button>
+                <Button
+                  onClick={() => {
+                    this.setState({
+                      activeStyleLayer: 1,
+                      blockStyleVisible: true,
+                    });
+                  }}
+                >
+                  Grid container style
+                </Button>
+              </Segment>
               <InlineForm
-                className="test"
                 schema={TabSchema()}
                 title="Tab block"
                 onChangeField={(id, value) => {

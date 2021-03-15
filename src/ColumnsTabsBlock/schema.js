@@ -67,17 +67,12 @@ export const TabSchema = () => ({
     {
       id: 'advanced_grid',
       title: 'Advanced Grid style',
-      fields: [
-        'ui_container',
-        'grid_class_name',
-        'grid_background_image',
-        'grid_css',
-      ],
+      fields: ['ui_container', 'grid_background_image'],
     },
     {
       id: 'advanced_row',
       title: 'Advanced Row style',
-      fields: ['row_vertical_align', 'row_justify_content', 'row_css'],
+      fields: ['row_vertical_align', 'row_justify_content'],
     },
   ],
   properties: {
@@ -101,40 +96,9 @@ export const TabSchema = () => ({
       title: 'Container',
       type: 'boolean',
     },
-    grid_class_name: {
-      title: 'Class name',
-      type: 'array',
-      items: {
-        choices: [],
-      },
-    },
     grid_background_image: {
       title: 'Background image',
       widget: 'object_by_path',
-    },
-    grid_margin: {
-      title: 'Margin',
-      widget: 'textarea',
-    },
-    grid_padding: {
-      title: 'Padding',
-      widget: 'textarea',
-    },
-    grid_background_color: {
-      title: 'Background color',
-      widget: 'color_picker',
-    },
-    grid_text_color: {
-      title: 'Text color',
-      widget: 'color_picker',
-    },
-    grid_css: {
-      title: 'Style',
-      widget: 'css',
-    },
-    row_ui_container: {
-      title: 'UI container',
-      type: 'boolean',
     },
     row_vertical_align: {
       title: 'Vertical align',
@@ -157,29 +121,6 @@ export const TabSchema = () => ({
         ['space-evenly', 'Space evenly'],
       ],
     },
-    row_class_name: {
-      title: 'Class name',
-      type: 'array',
-      items: {
-        choices: [],
-      },
-    },
-    row_margin: {
-      title: 'Margin',
-      widget: 'textarea',
-    },
-    row_padding: {
-      title: 'Padding',
-      widget: 'textarea',
-    },
-    row_background_color: {
-      title: 'Background color',
-      widget: 'color_picker',
-    },
-    row_css: {
-      title: 'Style',
-      widget: 'css',
-    },
   },
   required: [],
 });
@@ -190,121 +131,13 @@ export const ColumnSchema = () => ({
     {
       id: 'default',
       title: 'Default',
-      fields: [
-        'column_layout',
-        // 'column_ui_container',
-        // 'column_text_align',
-        // 'column_class_name',
-        // 'column_margin',
-        // 'column_padding',
-        // 'column_background_color',
-        // 'column_text_color',
-        'column_css',
-      ],
+      fields: ['column_layout'],
     },
   ],
   properties: {
     column_layout: {
       title: 'Column layout',
       widget: 'column_layout_object',
-    },
-    column_ui_container: {
-      title: 'UI container',
-      type: 'boolean',
-    },
-    column_text_align: {
-      title: 'Text align',
-      type: 'array',
-      choices: [
-        ['left', 'Left'],
-        ['center', 'Center'],
-        ['right', 'Right'],
-      ],
-    },
-    column_class_name: {
-      title: 'Class name',
-      type: 'array',
-      items: {
-        choices: [],
-      },
-    },
-    column_margin: {
-      title: 'Margin',
-      widget: 'textarea',
-    },
-    column_padding: {
-      title: 'Padding',
-      widget: 'textarea',
-    },
-    column_background_color: {
-      title: 'Background color',
-      widget: 'color_picker',
-    },
-    column_text_color: {
-      title: 'Text color',
-      widget: 'color_picker',
-    },
-    column_css: {
-      title: 'Style',
-      widget: 'css',
-    },
-  },
-  required: [],
-});
-
-export const BlockSchema = () => ({
-  title: 'Block',
-  fieldsets: [
-    {
-      id: 'default',
-      title: 'Advanced',
-      fields: [
-        'block_text_align',
-        'block_class_name',
-        'block_margin',
-        'block_padding',
-        'block_background_color',
-        'block_text_color',
-        'block_css',
-      ],
-    },
-  ],
-  properties: {
-    block_text_align: {
-      title: 'Text align',
-      type: 'array',
-      choices: [
-        ['left', 'Left'],
-        ['center', 'Center'],
-        ['right', 'Right'],
-      ],
-    },
-    block_class_name: {
-      title: 'Class name',
-      type: 'array',
-      items: {
-        choices: [],
-      },
-    },
-    block_margin: {
-      title: 'Margin',
-      widget: 'textarea',
-    },
-    block_padding: {
-      title: 'Padding',
-      widget: 'textarea',
-    },
-    block_background_color: {
-      title: 'Background color',
-      widget: 'color_picker',
-    },
-    block_text_color: {
-      title: 'Text color',
-      widget: 'color_picker',
-    },
-    block_css: {
-      title: 'Style',
-      widget: 'css',
     },
   },
   required: [],

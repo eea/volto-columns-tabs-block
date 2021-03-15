@@ -1,4 +1,4 @@
-@menuMargin: 1em 0;
+@menuMargin: 0;
 @menuBoxShadow: none;
 @menuBackgroundColor: #fff;
 @menuBorder: none;

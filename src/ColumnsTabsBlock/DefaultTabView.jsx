@@ -6,7 +6,12 @@ import cx from 'classnames';
 import '@eeacms/volto-columns-tabs-block/less/menu.less';
 
 const DefaultTabView = (props) => {
-  const { data = {}, activeTab = null, setActiveTab } = props;
+  const {
+    data = {},
+    theme = 'default',
+    activeTab = null,
+    setActiveTab,
+  } = props;
   const tabsData = data?.data;
   const tabs = tabsData?.blocks_layout?.items || [];
   const activeTabIndex = tabs.indexOf(activeTab);
@@ -43,7 +48,7 @@ const DefaultTabView = (props) => {
 
   return (
     <div
-      className={cx({
+      className={cx(theme, {
         'full-width':
           data.full_width || tabsData.blocks?.[activeTab]?.ui_container,
       })}

@@ -39,6 +39,7 @@ const View = (props) => {
       />
       <RenderTabView
         {...props}
+        theme={data.theme}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />

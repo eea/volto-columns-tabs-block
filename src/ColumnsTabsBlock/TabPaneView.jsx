@@ -22,111 +22,79 @@ const TabPaneView = (props) => {
   return (
     <StyleWrapperView
       data={activeTabData}
-      // styleData={{ backgroundColor: 'blue' }}
-    >
-      <div
-        className={cx(
+      styleData={{
+        ...(activeTabData.grid_block_wrapper_style || {}),
+        customClass: cx(
           'grid-block-wrapper',
-          getClasses(activeTabData.grid_class_name),
-        )}
-        // style={getStyle({
-        //   style: activeTabData.grid_css?.style,
-        //   margin: activeTabData.grid_margin,
-        //   padding: activeTabData.grid_padding,
-        //   backgroundColor: activeTabData.grid_background_color?.active
-        //     ? activeTabData.grid_background_color.color
-        //     : null,
-        //   textColor: activeTabData.grid_text_color?.active
-        //     ? activeTabData.grid_text_color.color
-        //     : null,
-        // })}
+          activeTabData.grid_block_wrapper_style?.customClass || '',
+        ),
+      }}
+    >
+      {activeTabData.grid_background_image ? (
+        <img
+          className="bg"
+          src={`${activeTabData.grid_background_image}/@@images/image`}
+          alt="test"
+        />
+      ) : (
+        ''
+      )}
+      <StyleWrapperView
+        data={activeTabData}
+        styleData={{
+          ...(activeTabData.grid_block_container_style || {}),
+          customClass: cx(
+            'grid-block-container',
+            activeTabData.grid_block_container_style?.customClass || '',
+            {
+              'ui container': activeTabData.ui_container,
+              'in-full-width': data.full_width && !activeTabData.ui_container,
+            },
+          ),
+        }}
       >
-        {activeTabData.grid_background_image ? (
-          <img
-            className="bg"
-            src={`${activeTabData.grid_background_image}/@@images/image`}
-            alt="test"
-          />
-        ) : (
-          ''
-        )}
-        <div
-          className={cx('grid-block-container', {
-            'ui container': activeTabData.ui_container,
-            'in-full-width': data.full_width && !activeTabData.ui_container,
-          })}
-        >
-          <Grid columns={grid_size} className="grid-block">
-            <Grid.Row
-              className={cx(
-                'grid-row',
-                getClasses(activeTabData.row_class_name, false, false),
-              )}
-              style={getStyle({
-                style: activeTabData.row_css?.style,
-                margin: activeTabData.row_margin,
-                padding: activeTabData.row_padding,
-                backgroundColor: activeTabData.row_background_color?.active
-                  ? activeTabData.row_background_color.color
-                  : null,
-                textColor: null,
-                textAlign: null,
-                justifyContent: activeTabData.row_justify_content,
-              })}
-              verticalAlign={activeTabData.row_vertical_align}
-            >
-              {columnList.map(([columnId, column], index) => (
-                <Grid.Column
-                  className={cx(
-                    'grid-column',
-                    `${numberToWord[column.column_layout.small]} wide small`,
-                    getClasses(
-                      column.column_class_name,
-                      column.column_ui_container || false,
-                      false,
-                    ),
-                  )}
-                  textAlign={column.column_text_align}
-                  style={getStyle({
-                    style: column.column_css?.style,
-                    margin: column.column_margin,
-                    padding: column.column_padding,
-                    backgroundColor: null,
-                    textColor: column.column_text_color?.active
-                      ? column.column_text_color.color
-                      : null,
-                  })}
-                  key={columnId}
-                  mobile={column.column_layout.mobile}
-                  tablet={column.column_layout.tablet}
-                  computer={column.column_layout.computer}
-                  largeScreen={column.column_layout.largeScreen}
-                  widescreen={column.column_layout.widescreen}
+        <Grid columns={grid_size} className="grid-block">
+          <Grid.Row
+            className={cx(
+              'grid-row',
+              getClasses(activeTabData.row_class_name, false, false),
+            )}
+            style={getStyle({
+              justifyContent: activeTabData.row_justify_content,
+            })}
+            verticalAlign={activeTabData.row_vertical_align}
+          >
+            {columnList.map(([columnId, column], index) => (
+              <Grid.Column
+                key={columnId}
+                className={cx(
+                  'grid-column',
+                  `${numberToWord[column.column_layout.small]} wide small`,
+                )}
+                textAlign={column.column_text_align}
+                mobile={column.column_layout.mobile}
+                tablet={column.column_layout.tablet}
+                computer={column.column_layout.computer}
+                largeScreen={column.column_layout.largeScreen}
+                widescreen={column.column_layout.widescreen}
+              >
+                <StyleWrapperView
+                  data={activeTabData}
+                  styleData={{
+                    customClass: cx('grid-column-wrapper'),
+                  }}
                 >
-                  <div
-                    className={cx('grid-column-wrapper')}
-                    style={getStyle({
-                      style: {},
-                      margin: null,
-                      padding: null,
-                      backgroundColor: column.column_background_color?.active
-                        ? column.column_background_color.color
-                        : null,
-                      textColor: null,
-                    })}
-                  >
-                    <RenderBlocks
-                      {...props}
-                      metadata={metadata}
-                      content={column}
-                    />
-                  </div>
-                </Grid.Column>
-              ))}
-            </Grid.Row>
-          </Grid>
-        </div>
-      </div>
+                  <RenderBlocks
+                    {...props}
+                    metadata={metadata}
+                    content={column}
+                  />
+                </StyleWrapperView>
+              </Grid.Column>
+            ))}
+          </Grid.Row>
+        </Grid>
+      </StyleWrapperView>
     </StyleWrapperView>
   );
 };

@@ -9,6 +9,7 @@ import '@eeacms/volto-columns-tabs-block/less/menu.less';
 const DefaultTabEdit = (props) => {
   const {
     data = {},
+    theme = 'default',
     activeTab = null,
     block,
     updateState,
@@ -123,9 +124,9 @@ const DefaultTabEdit = (props) => {
 
   return (
     <div
-      className={cx({
+      className={cx(theme, {
         'full-width':
-          data.full_width || tabsData.blocks?.[activeTab]?.row_ui_container,
+          data.full_width || tabsData.blocks?.[activeTab]?.ui_container,
       })}
     >
       <Tab
@@ -134,12 +135,10 @@ const DefaultTabEdit = (props) => {
             cx(
               data.menu_alignment || 'left',
               data.menu_hidden ? 'menu-hidden' : '',
-              data.full_width && !tabsData.blocks?.[activeTab]?.row_ui_container
+              data.full_width && !tabsData.blocks?.[activeTab]?.ui_container
                 ? 'in-full-width'
                 : '',
-              tabsData.blocks?.[activeTab]?.row_ui_container
-                ? 'ui container'
-                : '',
+              tabsData.blocks?.[activeTab]?.ui_container ? 'ui container' : '',
             ) || 'left',
         }}
         panes={panes}
