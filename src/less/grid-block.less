@@ -27,12 +27,11 @@
 
 .columns-tabs-container {
   position: relative;
+
   .grid-block-wrapper {
     position: relative;
-    overflow: hidden;
+
     .bg {
-      background-position: center;
-      background-size: cover;
       /* Set up positioning */
       position: absolute;
       top: 0;
@@ -41,6 +40,8 @@
       width: 100%;
       // min-width: 1024px;
       height: 100%;
+      background-position: center;
+      background-size: cover;
       /* Set rules to fill background */
       // min-height: 100%;
       // padding: 0;
@@ -51,9 +52,10 @@
     }
 
     .grid-block-container {
+      height: 100%;
       // margin-top: 1.4rem;
       padding: 1.5em 0;
-      height: 100%;
+
       &.in-full-width {
         padding: 0 1rem;
       }
@@ -202,8 +204,8 @@
   }
 
   p {
-    word-break: break-word;
     margin: 0em 0em 1em !important;
+    word-break: break-word;
   }
 }
 
