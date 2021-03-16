@@ -70,6 +70,7 @@ const TabPaneEdit = (props) => {
               'grid-block-wrapper',
               activeTabData.grid_block_wrapper_style?.customClass || '',
             ),
+            customId: tabId,
           }}
         >
           {activeTabData.grid_background_image ? (

@@ -36,6 +36,7 @@ export const empty = (count, layouts) => {
   const tabId = uuid();
   const blocks = {};
   blocks[tabId] = {
+    '@type': 'columns_tab',
     blocks: {},
     blocks_layout: {
       items: [],
@@ -61,6 +62,7 @@ export const emptyTab = (data) => {
   const tabId = uuid();
   return {
     ...data,
+    '@type': 'columns_tab',
     blocks: {
       ...data.blocks,
       [tabId]: {},
@@ -76,6 +78,7 @@ export const emptyTabColumns = (tabsData, tabId, count, layouts) => {
     blocks: {
       ...tabsData.blocks,
       [tabId]: {
+        '@type': 'columns_tab',
         blocks: {},
         blocks_layout: {
           items: [],

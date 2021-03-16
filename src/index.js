@@ -48,6 +48,18 @@ export default (config) => {
         schema: carouselSchema,
       },
     },
+    getBlocks: (data) => {
+      const { blocks = {}, blocks_layout = {} } = data?.data;
+      if (blocks_layout?.items?.length) {
+        return {
+          blocks: blocks_layout.items.map((block, index) => ({
+            title: blocks[block]['title'] || `Tab ${index + 1}`,
+            id: block,
+          })),
+        };
+      }
+      return {};
+    },
   };
 
   config.widgets.widget.column_layout_object = ColumnLayoutWidget;

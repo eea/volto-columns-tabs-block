@@ -128,6 +128,7 @@ const DefaultTabEdit = (props) => {
         'full-width':
           data.full_width || tabsData.blocks?.[activeTab]?.ui_container,
       })}
+      id={props.id}
     >
       <Tab
         menu={{
