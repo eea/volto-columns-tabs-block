@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { RenderBlocks } from '@eeacms/volto-columns-tabs-block/components';
 import {
   getColumns,
@@ -19,83 +19,110 @@ const TabPaneView = (props) => {
   const columnList = getColumns(activeTabData);
   const { grid_size } = data;
 
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    function handleResize() {
+      let nav = document.querySelector('.header-wrapper');
+      const menuHeight = nav.getBoundingClientRect().height;
+      const tabHeight = window.innerHeight - menuHeight;
+
+      setHeight(tabHeight);
+    }
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <StyleWrapperView
-      data={activeTabData}
-      styleData={{
-        ...(activeTabData.grid_block_wrapper_style || {}),
-        customClass: cx(
-          'grid-block-wrapper',
-          activeTabData.grid_block_wrapper_style?.customClass || '',
-        ),
-      }}
-    >
-      {activeTabData.grid_background_image ? (
-        <img
-          className="bg"
-          src={`${activeTabData.grid_background_image}/@@images/image`}
-          alt="test"
-        />
-      ) : (
-        ''
-      )}
+    <div className="block-container" style={{ height: height }}>
       <StyleWrapperView
         data={activeTabData}
         styleData={{
-          ...(activeTabData.grid_block_container_style || {}),
+          ...(activeTabData.grid_block_wrapper_style || {}),
           customClass: cx(
-            'grid-block-container',
-            activeTabData.grid_block_container_style?.customClass || '',
-            {
-              'ui container': activeTabData.ui_container,
-              'in-full-width': data.full_width && !activeTabData.ui_container,
-            },
+            'grid-block-wrapper',
+            activeTabData.grid_block_wrapper_style?.customClass || '',
           ),
         }}
       >
-        <Grid columns={grid_size} className="grid-block">
-          <Grid.Row
-            className={cx(
-              'grid-row',
-              getClasses(activeTabData.row_class_name, false, false),
-            )}
-            style={getStyle({
-              justifyContent: activeTabData.row_justify_content,
-            })}
-            verticalAlign={activeTabData.row_vertical_align}
+        {activeTabData.grid_background_image ? (
+          <div
+            className="bg"
+            style={{
+              backgroundImage: `url(${activeTabData.grid_background_image}/@@images/image`,
+            }}
+          />
+        ) : (
+          ''
+        )}
+        <div className="grid-content-container">
+          <StyleWrapperView
+            data={activeTabData}
+            styleData={{
+              ...(activeTabData.grid_block_container_style || {}),
+              customClass: cx(
+                'grid-block-container',
+                activeTabData.grid_block_container_style?.customClass || '',
+                {
+                  'ui container': activeTabData.ui_container,
+                  'in-full-width':
+                    data.full_width && !activeTabData.ui_container,
+                },
+              ),
+            }}
           >
-            {columnList.map(([columnId, column], index) => (
-              <Grid.Column
-                key={columnId}
+            <Grid
+              columns={grid_size}
+              className="grid-block"
+              verticalAlign={activeTabData.row_vertical_align}
+            >
+              <Grid.Row
                 className={cx(
-                  'grid-column',
-                  `${numberToWord[column.column_layout.small]} wide small`,
+                  'grid-row',
+                  getClasses(activeTabData.row_class_name, false, false),
                 )}
-                textAlign={column.column_text_align}
-                mobile={column.column_layout.mobile}
-                tablet={column.column_layout.tablet}
-                computer={column.column_layout.computer}
-                largeScreen={column.column_layout.largeScreen}
-                widescreen={column.column_layout.widescreen}
+                style={getStyle({
+                  justifyContent: activeTabData.row_justify_content,
+                })}
               >
-                <StyleWrapperView
-                  data={activeTabData}
-                  styleData={{
-                    customClass: cx('grid-column-wrapper'),
-                  }}
-                >
-                  <RenderBlocks
-                    {...props}
-                    metadata={metadata}
-                    content={column}
-                  />
-                </StyleWrapperView>
-              </Grid.Column>
-            ))}
-          </Grid.Row>
-        </Grid>
+                {columnList.map(([columnId, column], index) => (
+                  <Grid.Column
+                    key={columnId}
+                    className={cx(
+                      'grid-column',
+                      `${numberToWord[column.column_layout.small]} wide small`,
+                    )}
+                    textAlign={column.column_text_align}
+                    mobile={column.column_layout.mobile}
+                    tablet={column.column_layout.tablet}
+                    computer={column.column_layout.computer}
+                    largeScreen={column.column_layout.largeScreen}
+                    widescreen={column.column_layout.widescreen}
+                  >
+                    <StyleWrapperView
+                      data={activeTabData}
+                      styleData={{
+                        customClass: cx('grid-column-wrapper'),
+                      }}
+                    >
+                      <RenderBlocks
+                        {...props}
+                        metadata={metadata}
+                        content={column}
+                      />
+                    </StyleWrapperView>
+                  </Grid.Column>
+                ))}
+              </Grid.Row>
+            </Grid>
+          </StyleWrapperView>
+        </div>
       </StyleWrapperView>
-    </StyleWrapperView>
+    </div>
   );
 };
 
