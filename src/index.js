@@ -31,6 +31,7 @@ export default (config) => {
     edit: ColumnsTabsBlockEdit,
     restricted: false,
     mostUsed: false,
+    sidebarTab: 1,
     variants,
     security: {
       addPermission: [],
