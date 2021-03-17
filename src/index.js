@@ -56,12 +56,18 @@ export default (config) => {
           blocks: blocks_layout.items.map((block, index) => ({
             title: blocks[block]['title'] || `Tab ${index + 1}`,
             id: block,
+            type: COLUMNS_TABS_BLOCK,
           })),
         };
       }
       return {};
     },
   };
+
+  config.settings.hashlinkBlacklist = [
+    ...(config.settings.hashlinkBlacklist || []),
+    COLUMNS_TABS_BLOCK,
+  ];
 
   config.widgets.widget.column_layout_object = ColumnLayoutWidget;
   config.widgets.widget.color_picker = ColorPickerWidget;

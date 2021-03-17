@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import loadable from '@loadable/component';
 import { Menu } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
@@ -16,14 +16,13 @@ import 'slick-carousel/slick/slick.css';
 const Slider = loadable(() => import('react-slick'));
 
 const View = (props) => {
-  const history = useHistory();
-  const tab = React.useRef(props.activeTab);
   const slider = React.useRef(null);
   const {
     data = {},
     theme = 'default',
     activeTab = null,
     setActiveTab,
+    hashlink = {},
   } = props;
   const tabsData = data?.data;
   const tabs = tabsData?.blocks_layout?.items || [];
@@ -51,29 +50,23 @@ const View = (props) => {
     },
   };
 
-  const onHashChange = (location) => {
-    const activeTabIndex = tabs.indexOf(tab.current);
-    const id = location.hash.substring(1);
-    const index = tabs.indexOf(id);
-    if (id !== props.id && activeTabIndex !== index && index > -1) {
-      slider.current.slickGoTo(index);
+  React.useEffect(() => {
+    if (hashlink.counter > 0 && slider.current) {
+      const id = hashlink.hash || '';
+      const index = tabs.indexOf(id);
+      const parent = document.getElementById(props.id);
+      const element = document.getElementById(id);
+      if (id !== props.id && index > -1 && parent) {
+        if (activeTabIndex !== index) {
+          slider.current.slickGoTo(index);
+        }
+        parent.scrollIntoView({ behavior: 'smooth' });
+      } else if (id === props.id && element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
-  };
-
-  React.useEffect(() => {
-    tab.current = activeTab;
-  }, [activeTab]);
-
-  React.useEffect(() => {
-    const unlisten = history.listen((location, action) => {
-      onHashChange(location);
-    });
-    onHashChange(history.location);
-    return () => {
-      unlisten();
-    };
     /* eslint-disable-next-line */
-  }, []);
+  }, [hashlink.counter]);
 
   return (
     <div
@@ -81,6 +74,7 @@ const View = (props) => {
         'full-width':
           data.full_width || tabsData.blocks?.[activeTab]?.ui_container,
       })}
+      id={props.id}
     >
       <BodyClass className="has-carousel" />
       <Slider {...settings} ref={slider}>
@@ -149,4 +143,8 @@ const View = (props) => {
   );
 };
 
-export default View;
+export default connect((state) => {
+  return {
+    hashlink: state.hashlink,
+  };
+})(View);
