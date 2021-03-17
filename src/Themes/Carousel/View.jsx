@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { Menu } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
@@ -14,7 +15,9 @@ import 'slick-carousel/slick/slick.css';
 
 const Slider = loadable(() => import('react-slick'));
 
-const DefaultTabView = (props) => {
+const View = (props) => {
+  const history = useHistory();
+  const tab = React.useRef(props.activeTab);
   const slider = React.useRef(null);
   const {
     data = {},
@@ -47,6 +50,30 @@ const DefaultTabView = (props) => {
       setActiveTab(tabs[index]);
     },
   };
+
+  const onHashChange = (location) => {
+    const activeTabIndex = tabs.indexOf(tab.current);
+    const id = location.hash.substring(1);
+    const index = tabs.indexOf(id);
+    if (id !== props.id && activeTabIndex !== index && index > -1) {
+      slider.current.slickGoTo(index);
+    }
+  };
+
+  React.useEffect(() => {
+    tab.current = activeTab;
+  }, [activeTab]);
+
+  React.useEffect(() => {
+    const unlisten = history.listen((location, action) => {
+      onHashChange(location);
+    });
+    onHashChange(history.location);
+    return () => {
+      unlisten();
+    };
+    /* eslint-disable-next-line */
+  }, []);
 
   return (
     <div
@@ -122,4 +149,4 @@ const DefaultTabView = (props) => {
   );
 };
 
-export default DefaultTabView;
+export default View;
