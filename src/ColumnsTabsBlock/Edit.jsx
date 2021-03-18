@@ -23,6 +23,7 @@ import hideSVG from '@plone/volto/icons/hide.svg';
 import '@eeacms/volto-columns-tabs-block/less/grid-block.less';
 
 import { StyleWrapperEdit } from '@eeacms/volto-block-style/StyleWrapper';
+import { BlockStyleWrapperEdit } from '@eeacms/volto-block-style/BlockStyleWrapper';
 
 class Edit extends React.Component {
   constructor(props) {
@@ -44,7 +45,6 @@ class Edit extends React.Component {
       colSelections: {},
       preview: false,
     };
-    this.gridBlockContainer = React.createRef();
     this.blocksState = {};
     this.styleLayers = [
       'grid_block_wrapper_style',
@@ -204,13 +204,20 @@ class Edit extends React.Component {
       config.blocks.blocksConfig[COLUMNS_TABS_BLOCK].themes[theme]?.schema;
 
     return (
-      <div
+      <BlockStyleWrapperEdit
+        {...this.props}
         role="presentation"
-        className={cx(
-          'columns-tabs-container',
-          this.state.preview ? 'view' : 'edit',
-        )}
-        ref={this.gridBlockContainer}
+        data={{
+          ...(this.props.data || {}),
+          styles: {
+            ...(this.props.data.styles || {}),
+            customClass: cx(
+              this.props.data.styles?.customClass || '',
+              'columns-tabs-container',
+              this.state.preview ? 'view' : 'edit',
+            ),
+          },
+        }}
       >
         {!Object.keys(data.data || {}).length ? (
           <ColumnVariations
@@ -442,7 +449,7 @@ class Edit extends React.Component {
         ) : (
           ''
         )}
-      </div>
+      </BlockStyleWrapperEdit>
     );
   }
 }

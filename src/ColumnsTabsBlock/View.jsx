@@ -4,6 +4,9 @@ import { COLUMNS_TABS_BLOCK } from '@eeacms/volto-columns-tabs-block/constants';
 import config from '@plone/volto/registry';
 import DefaultTabView from './DefaultTabView';
 import { BodyClass } from '@plone/volto/helpers';
+import { StyleWrapperView } from '@eeacms/volto-block-style/StyleWrapper';
+
+import cx from 'classnames';
 
 import '@eeacms/volto-columns-tabs-block/less/grid-block.less';
 
@@ -28,7 +31,17 @@ const View = (props) => {
     DefaultTabView;
 
   return (
-    <div className="columns-tabs-container">
+    <StyleWrapperView
+      {...props}
+      data={data}
+      styleData={{
+        ...data.styles,
+        customClass: cx(
+          data.styles?.customClass || '',
+          'columns-tabs-container',
+        ),
+      }}
+    >
       <BodyClass
         className={
           props.data.full_width ||
@@ -43,7 +56,7 @@ const View = (props) => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-    </div>
+    </StyleWrapperView>
   );
 };
 
