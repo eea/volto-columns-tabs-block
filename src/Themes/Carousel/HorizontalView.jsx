@@ -44,6 +44,7 @@ const View = (props) => {
     autoplay: false,
     slidesToShow: 1,
     slidesToScroll: 1,
+    initialSlide: 0,
     lazyLoad: 'ondemand',
     beforeChange: (oldIndex, index) => {
       setActiveTab(tabs[index]);

@@ -1,4 +1,5 @@
-import CarouselTabView from './Carousel/View';
+import CarouselTabVertical from './Carousel/VerticalView';
+import CarouselTabHorizontal from './Carousel/HorizontalView';
 import carouselSchema from './Carousel/schema';
 
-export { CarouselTabView, carouselSchema };
+export { CarouselTabVertical, CarouselTabHorizontal, carouselSchema };

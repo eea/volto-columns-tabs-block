@@ -8,7 +8,8 @@ import {
   TabPaneView,
 } from './ColumnsTabsBlock';
 import {
-  CarouselTabView,
+  CarouselTabHorizontal,
+  CarouselTabVertical,
   carouselSchema,
 } from '@eeacms/volto-columns-tabs-block/Themes';
 import { variants } from './grid';
@@ -45,7 +46,12 @@ export default (config) => {
       },
       carousel: {
         tabEdit: DefaultTabEdit,
-        tabView: CarouselTabView,
+        tabView: CarouselTabHorizontal,
+        schema: carouselSchema,
+      },
+      carousel_vertical: {
+        tabEdit: DefaultTabEdit,
+        tabView: CarouselTabVertical,
         schema: carouselSchema,
       },
     },

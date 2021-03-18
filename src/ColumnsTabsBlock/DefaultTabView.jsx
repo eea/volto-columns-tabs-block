@@ -79,10 +79,14 @@ const DefaultTabView = (props) => {
           className: cx(
             data.menu_alignment || 'left',
             data.menu_hidden ? 'menu-hidden' : '',
-            data.full_width && !tabsData.blocks?.[activeTab]?.ui_container
+            data.full_width &&
+              !data.ui_container &&
+              !tabsData.blocks?.[activeTab]?.ui_container
               ? 'in-full-width'
               : '',
-            tabsData.blocks?.[activeTab]?.ui_container ? 'ui container' : '',
+            data.ui_container || tabsData.blocks?.[activeTab]?.ui_container
+              ? 'ui container'
+              : '',
           ),
         }}
         panes={panes}

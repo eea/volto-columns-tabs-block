@@ -5,7 +5,7 @@ export const ColumnTabsSchema = (props, themes = []) => {
       {
         id: 'default',
         title: 'Default',
-        fields: ['theme', 'initial_active_tab', 'full_width'],
+        fields: ['theme', 'initial_active_tab', 'full_width', 'ui_container'],
       },
       {
         id: 'menu',
@@ -31,6 +31,10 @@ export const ColumnTabsSchema = (props, themes = []) => {
       },
       full_width: {
         title: 'Take full width',
+        type: 'boolean',
+      },
+      ui_container: {
+        title: 'Container',
         type: 'boolean',
       },
       menu_title: {
