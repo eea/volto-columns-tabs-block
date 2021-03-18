@@ -154,3 +154,14 @@ export const getStyle = (data) => {
     ...style,
   };
 };
+
+export const scrollToTarget = (target, offsetHeight = 0) => {
+  const bodyRect = document.body.getBoundingClientRect().top;
+  const targetRect = target.getBoundingClientRect().top;
+  const targetPosition = targetRect - bodyRect - offsetHeight;
+
+  return window.scrollTo({
+    top: targetPosition,
+    behavior: 'smooth',
+  });
+};

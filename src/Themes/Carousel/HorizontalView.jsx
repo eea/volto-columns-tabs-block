@@ -4,6 +4,7 @@ import loadable from '@loadable/component';
 import { Menu } from 'semantic-ui-react';
 import { Icon } from '@plone/volto/components';
 import { TabPaneView } from '@eeacms/volto-columns-tabs-block';
+import { scrollToTarget } from '@eeacms/volto-columns-tabs-block/helpers';
 import { BodyClass } from '@plone/volto/helpers';
 import cx from 'classnames';
 
@@ -56,14 +57,15 @@ const View = (props) => {
       const id = hashlink.hash || '';
       const index = tabs.indexOf(id);
       const parent = document.getElementById(props.id);
-      const element = document.getElementById(id);
+      const headerWrapper = document.querySelector('.header-wrapper');
+      const offsetHeight = headerWrapper?.offsetHeight || 0;
       if (id !== props.id && index > -1 && parent) {
         if (activeTabIndex !== index) {
           slider.current.slickGoTo(index);
         }
-        parent.scrollIntoView({ behavior: 'smooth' });
-      } else if (id === props.id && element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        scrollToTarget(parent, offsetHeight);
+      } else if (id === props.id && parent) {
+        scrollToTarget(parent, offsetHeight);
       }
     }
     /* eslint-disable-next-line */
