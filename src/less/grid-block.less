@@ -3,6 +3,7 @@
 
 .columns-tabs-container {
   position: relative;
+  margin-bottom: 0 !important;
 
   .grid-block-wrapper {
     position: relative;
@@ -38,9 +39,14 @@
     }
   }
 
+  .grid-column-wrapper {
+    padding: 1em 0;
+  }
+
   .ui.grid.grid-block {
     position: relative;
     height: 100%;
+    margin-bottom: 0 !important;
 
     .grid-column {
       .block .block-add-button {
@@ -462,16 +468,6 @@ body {
           margin-right: calc(-50vw + 20px) !important;
           margin-left: calc(-50vw + 20px) !important;
         }
-      }
-    }
-  }
-
-  @media only screen and (max-width: 767px) {
-    .columns-tabs-container {
-      .block-container,
-      .grid-content-container {
-        height: auto !important;
-        min-height: 600px;
       }
     }
   }
