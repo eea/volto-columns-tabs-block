@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Menu, Tab } from 'semantic-ui-react';
 import { TabPaneView } from '@eeacms/volto-columns-tabs-block';
+import { scrollToTarget } from '@eeacms/volto-columns-tabs-block/helpers';
 import cx from 'classnames';
 
 import '@eeacms/volto-columns-tabs-block/less/menu.less';
@@ -53,14 +54,15 @@ const DefaultTabView = (props) => {
       const id = hashlink.hash || '';
       const index = tabs.indexOf(id);
       const parent = document.getElementById(props.id);
-      const element = document.getElementById(id);
+      const headerWrapper = document.querySelector('.header-wrapper');
+      const offsetHeight = headerWrapper?.offsetHeight || 0;
       if (id !== props.id && index > -1 && parent) {
         if (activeTabIndex !== index) {
           setActiveTab(id);
         }
-        parent.scrollIntoView({ behavior: 'smooth' });
-      } else if (id === props.id && element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        scrollToTarget(parent, offsetHeight);
+      } else if (id === props.id && parent) {
+        scrollToTarget(parent, offsetHeight);
       }
     }
     /* eslint-disable-next-line */
