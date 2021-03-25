@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { RenderBlocks } from '@eeacms/volto-columns-tabs-block/components';
 import {
   getColumns,
@@ -19,23 +19,23 @@ const TabPaneView = (props) => {
   const columnList = getColumns(activeTabData);
   const { grid_size } = data;
 
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    function handleResize() {
-      let nav = document.querySelector('.header-wrapper');
-      const menuHeight = nav.getBoundingClientRect().height;
-      // 15 is because in CSS we had to remove the margin between blocks
-      const tabHeight = window.innerHeight - menuHeight + 15;
-      setHeight(tabHeight);
-    }
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  // const [height, setHeight] = useState(0);
+  //
+  // useEffect(() => {
+  //   function handleResize() {
+  //     let nav = document.querySelector('.header-wrapper');
+  //     const menuHeight = nav.getBoundingClientRect().height;
+  //     // 15 is because in CSS we had to remove the margin between blocks
+  //     const tabHeight = window.innerHeight - menuHeight + 15;
+  //     setHeight(tabHeight);
+  //   }
+  //
+  //   handleResize();
+  //   window.addEventListener('resize', handleResize);
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, []);
 
   return (
     <StyleWrapperView
@@ -79,7 +79,6 @@ const TabPaneView = (props) => {
         >
           <Grid
             columns={grid_size}
-            style={{ minHeight: height }}
             className="grid-block"
             verticalAlign={activeTabData.row_vertical_align}
           >
