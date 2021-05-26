@@ -9,7 +9,7 @@
 @menuTitleFontSize: 24px;
 @menuTitleFontWeight: normal;
 @menuTitleColor: #013C60;
-@menuTitleBackgrounnd: none;
+@menuTitleBackground: none;
 @menuTitleHoverColor: #013C60;
 @menuTitleHoverBackground: none;
 

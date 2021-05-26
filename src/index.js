@@ -8,7 +8,8 @@ import {
   TabPaneView,
 } from './ColumnsTabsBlock';
 import {
-  CarouselTabView,
+  CarouselTabHorizontal,
+  CarouselTabVertical,
   carouselSchema,
 } from '@eeacms/volto-columns-tabs-block/Themes';
 import { variants } from './grid';
@@ -31,6 +32,7 @@ export default (config) => {
     edit: ColumnsTabsBlockEdit,
     restricted: false,
     mostUsed: false,
+    sidebarTab: 1,
     variants,
     security: {
       addPermission: [],
@@ -44,7 +46,12 @@ export default (config) => {
       },
       carousel: {
         tabEdit: DefaultTabEdit,
-        tabView: CarouselTabView,
+        tabView: CarouselTabHorizontal,
+        schema: carouselSchema,
+      },
+      carousel_vertical: {
+        tabEdit: DefaultTabEdit,
+        tabView: CarouselTabVertical,
         schema: carouselSchema,
       },
     },
@@ -55,12 +62,18 @@ export default (config) => {
           blocks: blocks_layout.items.map((block, index) => ({
             title: blocks[block]['title'] || `Tab ${index + 1}`,
             id: block,
+            type: COLUMNS_TABS_BLOCK,
           })),
         };
       }
       return {};
     },
   };
+
+  config.settings.hashlinkBlacklist = [
+    ...(config.settings.hashlinkBlacklist || []),
+    COLUMNS_TABS_BLOCK,
+  ];
 
   config.widgets.widget.column_layout_object = ColumnLayoutWidget;
   config.widgets.widget.color_picker = ColorPickerWidget;

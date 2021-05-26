@@ -90,9 +90,12 @@ const TabPaneEdit = (props) => {
                 'grid-block-container',
                 activeTabData.grid_block_container_style?.customClass || '',
                 {
-                  'ui container': activeTabData.ui_container,
+                  'ui container':
+                    data.ui_container || activeTabData.ui_container,
                   'in-full-width':
-                    data.full_width && !activeTabData.ui_container,
+                    data.full_width &&
+                    !data.ui_container &&
+                    !activeTabData.ui_container,
                 },
               ),
             }}

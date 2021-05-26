@@ -1,32 +1,9 @@
 @import './globals.less';
 @import './grid-block-container.less';
 
-.rounded {
-  .grid-column-block p.image {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    border-radius: 100%;
-    box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.6);
-
-    img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .grid-column-block p.image:after {
-    display: block;
-    padding-bottom: 100%;
-    content: '';
-  }
-}
-
 .columns-tabs-container {
   position: relative;
+  margin-bottom: 0 !important;
 
   .grid-block-wrapper {
     position: relative;
@@ -54,7 +31,7 @@
     .grid-block-container {
       height: 100%;
       // margin-top: 1.4rem;
-      padding: 1.5em 0;
+      // padding: 1.5em 0;
 
       &.in-full-width {
         padding: 0 1rem;
@@ -62,9 +39,14 @@
     }
   }
 
+  .grid-column-wrapper {
+    padding: 1em 0;
+  }
+
   .ui.grid.grid-block {
     position: relative;
     height: 100%;
+    margin-bottom: 0 !important;
 
     .grid-column {
       .block .block-add-button {
@@ -288,6 +270,37 @@
   }
 }
 
+.block-editor-columns_tabs_block {
+  a.ui.card,
+  .ui.cards a.card,
+  .ui.link.cards .card,
+  .ui.link.card {
+    border: 1px solid #edf2f3;
+    box-shadow: none;
+
+    &:hover {
+      border: 1px solid #edf2f3;
+      background-color: #edf2f3;
+      box-shadow: none;
+    }
+  }
+
+  .ui.card .content {
+    padding-top: 1.5em !important;
+    padding-bottom: 1.5em !important;
+    font-size: 10px !important;
+    text-align: center;
+
+    p {
+      color: #717171;
+    }
+
+    svg {
+      fill: #68778d !important;
+    }
+  }
+}
+
 /* Smallscreen */
 @media only screen and (min-width: @smallscreenBreakpoint) and (max-width: @mobileBreakpoint) {
   .ui.grid.grid-block > .row > [class*='one wide small'].column,
@@ -486,16 +499,6 @@ body {
           margin-right: calc(-50vw + 20px) !important;
           margin-left: calc(-50vw + 20px) !important;
         }
-      }
-    }
-  }
-
-  @media only screen and (max-width: 480px) {
-    .columns-tabs-container {
-      .block-container,
-      .grid-content-container {
-        height: auto !important;
-        min-height: 600px;
       }
     }
   }
